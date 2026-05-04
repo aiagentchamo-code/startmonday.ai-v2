@@ -1,6 +1,6 @@
 import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
-import vercel from '@astrojs/vercel/serverless';
+import vercel from '@astrojs/vercel';
 
 // Warn at startup if critical environment variables are missing.
 const requiredEnvVars = ['SMTP_HOST', 'SMTP_USER', 'SMTP_PASS'];
