@@ -11,8 +11,8 @@
   "dependencies": {
     "@astrojs/node": "^10.0.6",
     "@astrojs/react": "^5.0.4",
-    "@astrojs/tailwind": "^5.1.4",
-    "@astrojs/vercel": "^7.8.2",
+    "@astrojs/tailwind": "^6.0.2",
+    "@astrojs/vercel": "^10.0.6",
     "@supabase/ssr": "^0.10.2",
     "@supabase/supabase-js": "^2.105.1",
     "@types/nodemailer": "^8.0.0",
