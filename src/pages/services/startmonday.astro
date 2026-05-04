@@ -1,0 +1,139 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
+import FAQItem from '../../components/FAQItem.astro';
+import CTASection from '../../components/CTASection.astro';
+
+const tiers = [
+  { name: 'Starter', price: '€300', points: 20, highlight: false },
+  { name: 'Scaler', price: '€600', points: 45, highlight: true },
+  { name: 'Power', price: '€1,200', points: 100, highlight: false },
+];
+
+const menu = [
+  ['Access Live Webinar', 4],
+  ['Monthly Overview AI Tools', 3],
+  ['Mentoring hour (1-on-1)', 7],
+  ['Team Strategy Check-In (45 min)', 13],
+  ['Location Mini-Workshop (90 min)', 9],
+  ['Customized Prompt Package', 6],
+  ['AI Use Case Assessment', 9],
+];
+---
+<Layout title="StartMonday+ | Flexible AI subscription for professionals">
+  <section class="container-content pt-16 md:pt-20 pb-12">
+    <nav aria-label="Breadcrumb" class="text-sm text-graphite/70 mb-4">
+      <a href="/services" class="hover:text-ink">Services</a> <span class="mx-2">/</span> StartMonday+
+    </nav>
+    <span class="eyebrow text-teal">Subscription</span>
+    <h1 class="mt-4">StartMonday<span class="text-amber">+</span></h1>
+    <p class="mt-5 max-w-2xl text-xl text-graphite">Your ongoing advantage in the age of AI.</p>
+    <p class="mt-4 max-w-2xl text-graphite">
+      A flexible, point-based subscription for professionals and businesses who want continuous access to AI knowledge, expert support and practical resources — without the complexity of custom consulting.
+    </p>
+  </section>
+
+  <section class="container-content pb-16">
+    <div class="grid gap-10 md:grid-cols-2 md:items-center">
+      <div>
+        <SectionHeading eyebrow="How it works" title="Choose a plan, spend points your way." />
+        <p class="mt-5 text-graphite">
+          Choose your subscription level. Receive monthly StartPoints that you spend on a curated menu of expert-led services and learning resources. You decide what fits your priorities — no waste, complete flexibility. All services are delivered online — ideal for busy professionals and dispersed teams.
+        </p>
+        <p class="mt-3 text-sm text-graphite/70"><strong>Note:</strong> unused points carry forward for a maximum of 3 months.</p>
+      </div>
+      <div class="overflow-hidden rounded-2xl aspect-[4/3]">
+        <img
+          src="/images/startmonday-plus-remote.png"
+          alt="Professional using an AI assistant interface for a virtual mentoring session"
+          class="w-full h-full object-cover"
+          loading="eager"
+          width="600"
+          height="450"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section class="container-content pb-20">
+    <div class="grid gap-6 md:grid-cols-3">
+      {tiers.map(t => (
+        <div class:list={[
+          'rounded border p-8 flex flex-col gap-6',
+          t.highlight ? 'bg-ink text-paper border-ink shadow-elevated' : 'bg-paper border-line',
+        ]}>
+          <div>
+            <span class:list={['eyebrow', t.highlight && 'text-amber']}>{t.name}</span>
+            <div class="mt-3 flex items-baseline gap-1">
+              <span class="text-4xl font-bold">{t.price}</span>
+              <span class:list={['text-sm', t.highlight ? 'text-paper/60' : 'text-graphite']}>/ month</span>
+            </div>
+          </div>
+          <div class:list={['text-sm', t.highlight ? 'text-paper/80' : 'text-graphite']}>
+            <strong>{t.points} StartPoints</strong> per month
+          </div>
+          <a href="/sign-up" class:list={['btn mt-auto', t.highlight ? 'btn-accent' : 'btn-secondary']}>Start {t.name}</a>
+        </div>
+      ))}
+    </div>
+    <p class="mt-4 text-xs text-graphite/70">Prices exclude VAT. Monthly billing. Cancellation with one full billing cycle notice.</p>
+  </section>
+
+  <!-- Points menu -->
+  <section class="bg-mist">
+    <div class="container-content py-20">
+      <SectionHeading eyebrow="Menu" title="What you can spend points on" />
+      <div class="mt-10 overflow-hidden rounded border border-line bg-paper">
+        <table class="w-full text-left">
+          <thead class="bg-mist border-b border-line">
+            <tr>
+              <th class="px-6 py-4 text-sm font-semibold text-graphite">Service</th>
+              <th class="px-6 py-4 text-sm font-semibold text-graphite text-right">Point cost</th>
+            </tr>
+          </thead>
+          <tbody>
+            {menu.map(([name, cost]) => (
+              <tr class="border-b border-line last:border-b-0">
+                <td class="px-6 py-4 text-ink">{name}</td>
+                <td class="px-6 py-4 text-right font-semibold text-ink">{cost} Points</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Benefits -->
+  <section class="container-content py-20">
+    <SectionHeading eyebrow="Benefits" title="Built for busy teams" />
+    <div class="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+      {[
+        ['Flexibility', 'Choose services based on your needs'],
+        ['Online access', 'From every location'],
+        ['Practical insights', 'Applicable immediately'],
+        ['Monthly progress', 'With ongoing support'],
+      ].map(([h, p]) => (
+        <div class="rounded bg-mist p-6 border border-line">
+          <h3 class="text-lg font-semibold">{h}</h3>
+          <p class="mt-2 text-sm text-graphite">{p}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="container-content pb-20">
+    <SectionHeading eyebrow="FAQ" title="StartMonday+ — frequently asked" />
+    <div class="mt-10 max-w-3xl">
+      <FAQItem q="Can I change my plan?">Yes — upgrade or downgrade from the next billing cycle.</FAQItem>
+      <FAQItem q="What if I don't use my points?">Points roll forward up to 3 months, then expire.</FAQItem>
+      <FAQItem q="Can multiple people in my team use one subscription?">Yes — points are organization-wide on Scaler and Power.</FAQItem>
+      <FAQItem q="Is there a minimum commitment?">No long-term contract. One month's notice to cancel.</FAQItem>
+      <FAQItem q="Can I buy extra points?">Yes. Top-ups are available in bundles of 10, 25, and 50 points.</FAQItem>
+    </div>
+  </section>
+
+  <CTASection heading="Ready to start?" cta="Choose a plan" href="/sign-up" />
+</Layout>

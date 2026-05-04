@@ -1,0 +1,58 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const plans = [
+  {
+    name: 'Starter',
+    price: '€300',
+    cadence: '/ month',
+    description: 'For solo professionals and small teams starting with applied AI.',
+    points: '20 StartPoints',
+    cta: 'Start Starter',
+  },
+  {
+    name: 'Scaler',
+    price: '€600',
+    cadence: '/ month',
+    description: 'For teams running regular AI projects and internal enablement.',
+    points: '45 StartPoints',
+    cta: 'Start Scaler',
+    featured: true,
+  },
+  {
+    name: 'Power',
+    price: '€1,200',
+    cadence: '/ month',
+    description: 'For organizations that need rapid advisory and delivery capacity.',
+    points: '100 StartPoints',
+    cta: 'Start Power',
+  },
+];
+---
+<Layout title="Pricing | StartMonday.AI">
+  <section class="container-content py-16">
+    <span class="eyebrow">Pricing</span>
+    <h1 class="mt-4">Transparent monthly plans for ongoing AI support.</h1>
+    <p class="mt-5 max-w-2xl text-lg text-graphite">
+      StartMonday+ plans are points-based, flexible, and built for practical execution.
+    </p>
+  </section>
+
+  <section class="container-content pb-20">
+    <div class="grid gap-6 md:grid-cols-3">
+      {plans.map((plan) => (
+        <article class:list={['rounded-2xl border p-8', plan.featured ? 'bg-ink text-paper border-ink' : 'bg-paper border-line']}>
+          <h2 class="text-2xl">{plan.name}</h2>
+          <p class:list={['mt-2 text-sm', plan.featured ? 'text-paper/75' : 'text-graphite']}>{plan.description}</p>
+          <p class="mt-6 flex items-end gap-1">
+            <strong class="text-4xl font-bold">{plan.price}</strong>
+            <span class:list={plan.featured ? 'text-paper/70' : 'text-graphite'}>{plan.cadence}</span>
+          </p>
+          <p class:list={['mt-4 text-sm font-semibold', plan.featured ? 'text-amber' : 'text-ink']}>{plan.points}</p>
+          <a href={`/sign-up?plan=${plan.name.toLowerCase()}`} class:list={['btn mt-8', plan.featured ? 'btn-accent' : 'btn-secondary']}>{plan.cta}</a>
+        </article>
+      ))}
+    </div>
+    <p class="mt-6 text-sm text-graphite">Need workshops, accelerator formats, or a build scope? <a href="/contact" class="underline hover:text-ink">Contact us for a custom quote</a>.</p>
+  </section>
+</Layout>

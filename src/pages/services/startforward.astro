@@ -1,0 +1,73 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
+import CTASection from '../../components/CTASection.astro';
+---
+<Layout title="StartForward | AI & sustainability accelerator for businesses">
+  <section class="container-content pt-16 md:pt-20 pb-12">
+    <nav aria-label="Breadcrumb" class="text-sm text-graphite/70 mb-4">
+      <a href="/services" class="hover:text-ink">Services</a> <span class="mx-2">/</span> StartForward
+    </nav>
+    <span class="eyebrow">Accelerator</span>
+    <h1 class="mt-4">StartForward</h1>
+    <p class="mt-5 max-w-2xl text-xl text-graphite">The AI &amp; Sustainability Accelerator.</p>
+  </section>
+
+  <section class="container-content pb-16 grid gap-10 md:grid-cols-2 md:items-center">
+    <div class="space-y-8">
+      <div>
+        <h2 class="text-3xl">Program details</h2>
+        <ul class="prose-brand">
+          <li>5-week program with full-day sessions on Fridays</li>
+          <li>Transform your business through AI-supported sustainability innovation</li>
+          <li>Includes: pre-program assessment, implementation plan, and post-program support</li>
+          <li>For up to 10 selected companies</li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="text-3xl">Benefits</h2>
+        <ul class="prose-brand">
+          <li>Expert guidance and support from peers</li>
+          <li>Concrete implementation results</li>
+          <li>Progress measurement and exchange of best practices</li>
+        </ul>
+      </div>
+    </div>
+    <div class="overflow-hidden rounded-2xl aspect-[4/3]">
+      <img
+        src="/images/startforward-accelerator.png"
+        alt="StartForward cohort session — team presenting AI and sustainability innovation results"
+        class="w-full h-full object-cover"
+        loading="eager"
+        width="600"
+        height="450"
+      />
+    </div>
+  </section>
+
+  <section class="bg-mist">
+    <div class="container-content py-20">
+      <SectionHeading eyebrow="Application" title="How to apply" />
+      <div class="mt-10 grid gap-6 md:grid-cols-3">
+        <div class="rounded bg-paper border border-line p-6">
+          <span class="text-3xl font-bold text-amber">01</span>
+          <h3 class="mt-3 text-lg font-semibold">Express interest</h3>
+          <p class="mt-2 text-sm text-graphite">Submit a short form with your company details and sustainability goal.</p>
+        </div>
+        <div class="rounded bg-paper border border-line p-6">
+          <span class="text-3xl font-bold text-amber">02</span>
+          <h3 class="mt-3 text-lg font-semibold">Intake call</h3>
+          <p class="mt-2 text-sm text-graphite">A 30-minute conversation to assess fit and answer your questions.</p>
+        </div>
+        <div class="rounded bg-paper border border-line p-6">
+          <span class="text-3xl font-bold text-amber">03</span>
+          <h3 class="mt-3 text-lg font-semibold">Selection</h3>
+          <p class="mt-2 text-sm text-graphite">Up to 10 companies per cohort. You're in — onboarding begins.</p>
+        </div>
+      </div>
+      <p class="mt-8 text-sm text-graphite"><span class="tbd-chip">Cohort details TBD</span> Next cohort start date, location, and price per company to be confirmed.</p>
+    </div>
+  </section>
+
+  <CTASection heading="Interested in the next StartForward cohort?" cta="Apply now" href="/sign-up" />
+</Layout>

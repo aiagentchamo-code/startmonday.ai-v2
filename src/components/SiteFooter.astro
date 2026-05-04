@@ -1,0 +1,79 @@
+---
+const year = new Date().getFullYear();
+---
+<footer class="mt-24 border-t border-line bg-mist">
+  <div class="container-content grid gap-10 py-16 md:grid-cols-4">
+    <div class="space-y-3">
+      <a href="/" class="inline-flex items-center gap-2 font-bold text-ink">
+        <span class="inline-flex h-8 w-8 items-center justify-center rounded bg-ink text-amber text-sm font-bold">SM</span>
+        <span class="text-lg">StartMonday<span class="text-amber">.AI</span></span>
+      </a>
+      <p class="text-sm text-graphite">AI training with immediate impact.</p>
+      <p class="text-sm text-graphite/80 max-w-xs">Hands-on AI education, flexible expert support, and custom AI builds for organizations.</p>
+    </div>
+
+    <div>
+      <h4 class="text-sm font-semibold text-ink mb-3">Services</h4>
+      <ul class="space-y-2 text-sm text-graphite">
+        <li><a href="/services/ai-business-academy" class="hover:text-ink">AI Business Academy</a></li>
+        <li><a href="/services/startmonday" class="hover:text-ink">StartMonday+</a></li>
+        <li><a href="/services/startforward" class="hover:text-ink">StartForward</a></li>
+        <li><a href="/services/ai-solutions-lab" class="hover:text-ink">AI Solutions Lab</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h4 class="text-sm font-semibold text-ink mb-3">Company</h4>
+      <ul class="space-y-2 text-sm text-graphite">
+        <li><a href="/about-us" class="hover:text-ink">About us</a></li>
+        <li><a href="/pricing" class="hover:text-ink">Pricing</a></li>
+        <li><a href="/resources" class="hover:text-ink">Resources</a></li>
+        <li><a href="/impression" class="hover:text-ink">Impression</a></li>
+        <li><a href="/contact" class="hover:text-ink">Contact</a></li>
+        <li><a href="/sign-up" class="hover:text-ink">Sign up</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h4 class="text-sm font-semibold text-ink mb-3">Stay in touch</h4>
+      <form id="footer-subscribe-form" class="flex flex-col gap-2">
+        <label for="footer-email" class="sr-only">Email address</label>
+        <input id="footer-email" name="email" type="email" placeholder="you@work.com" required class="rounded-input border border-line bg-paper px-3 py-2 text-sm focus:border-ink outline-none" />
+        <button type="submit" class="btn btn-primary !py-2 text-sm">Subscribe</button>
+        <p id="footer-subscribe-feedback" class="text-xs text-graphite" aria-live="polite"></p>
+      </form>
+    </div>
+  </div>
+
+  <div class="border-t border-line">
+    <div class="container-content flex flex-col gap-3 py-6 text-xs text-graphite md:flex-row md:items-center md:justify-between">
+      <div>© {year} StartMonday.AI B.V. All rights reserved.</div>
+      <div class="flex flex-wrap gap-4">
+        <a href="/privacy-policy" class="hover:text-ink">Privacy policy</a>
+        <a href="/terms" class="hover:text-ink">Terms</a>
+        <a href="/cookie-policy" class="hover:text-ink">Cookie policy</a>
+        <span>KvK: 91234567 · VAT: NL865432109B01</span>
+      </div>
+    </div>
+  </div>
+</footer>
+<script is:inline>
+  (function () {
+    var form = document.getElementById('footer-subscribe-form');
+    var feedback = document.getElementById('footer-subscribe-feedback');
+    if (!form || !feedback) return;
+    form.addEventListener('submit', async function (event) {
+      event.preventDefault();
+      var data = new FormData(form);
+      feedback.textContent = 'Submitting...';
+      try {
+        var response = await fetch('/api/subscribe', { method: 'POST', body: data });
+        if (!response.ok) throw new Error('Failed request');
+        feedback.textContent = 'Thanks. You are now on the update list.';
+        form.reset();
+      } catch (error) {
+        feedback.textContent = 'Something went wrong. Please email hello@startmonday.ai.';
+      }
+    });
+  })();
+</script>

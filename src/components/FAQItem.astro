@@ -1,0 +1,13 @@
+---
+interface Props { q: string; }
+const { q } = Astro.props;
+---
+<details class="group border-b border-line py-5">
+  <summary class="flex cursor-pointer items-center justify-between gap-4 list-none text-base font-semibold text-ink">
+    <span>{q}</span>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 transition-transform duration-300 group-open:rotate-45"><path d="M12 5v14M5 12h14"/></svg>
+  </summary>
+  <div class="pt-3 text-graphite leading-relaxed">
+    <slot />
+  </div>
+</details>

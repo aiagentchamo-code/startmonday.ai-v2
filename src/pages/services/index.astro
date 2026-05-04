@@ -1,0 +1,131 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import CTASection from '../../components/CTASection.astro';
+
+const services = [
+  {
+    href: '/services/ai-business-academy',
+    tag: 'Academy',
+    title: 'AI Business Academy',
+    audience: 'For teams of 5–50 who want to move from AI curiosity to daily practice.',
+    body: 'For organizations that want their teams confidently using AI — not just talking about it. We run intensive programs that take people from zero to applied AI skills in days, not months.',
+    formats: 'Executive workshop (2 days) · Team bootcamp (3 days, up to 10) · Certificate program (12 weeks)',
+    cta: 'See Academy formats',
+    img: '/images/academy-workshop.png',
+    imgAlt: 'Facilitator leading an AI strategy session at the whiteboard with a diverse team',
+  },
+  {
+    href: '/services/startmonday',
+    tag: 'Subscription',
+    title: 'StartMonday+',
+    audience: 'For teams that already use AI and want a steady partner for the next quarter.',
+    body: 'Ongoing AI support without a long-term commitment. Spend monthly points on mentoring, workshops, assessments or hands-on help — whenever your team needs them.',
+    formats: 'Three tiers from €300 to €1,200 / month · Points roll forward up to 3 months · Mentoring, workshops, assessments',
+    cta: 'View subscription tiers',
+    img: '/images/startmonday-plus-remote.png',
+    imgAlt: 'Professional working remotely with an AI assistant interface on screen',
+  },
+  {
+    href: '/services/startforward',
+    tag: 'Accelerator',
+    title: 'StartForward Accelerator',
+    audience: 'For up to 10 companies ready to pair AI adoption with sustainability goals.',
+    body: 'A 5-week accelerator that helps your leadership team build an AI + sustainability plan you can actually execute — with assessment before, structured Friday sessions during, and support after.',
+    formats: 'Full-day Friday sessions · Pre-program assessment & plan · Post-program support',
+    cta: 'Apply for StartForward',
+    img: '/images/startforward-accelerator.png',
+    imgAlt: 'Diverse team presenting during a StartForward AI and sustainability accelerator session',
+  },
+  {
+    href: '/services/ai-solutions-lab',
+    tag: 'Build',
+    title: 'AI Solutions Lab',
+    audience: 'For teams who have identified the workflow and need it shipped.',
+    body: 'When training is not the answer, we build with you. From brand-consistent multilingual chatbots to automation workflows and internal AI agents — delivered as working tools, not slides.',
+    formats: 'Multilingual chatbots · Zapier & Make.com workflows · Internal AI agents & custom tools',
+    cta: 'Talk to us about a build',
+    img: '/images/solutions-lab-chatbot.png',
+    imgAlt: 'Developer building a custom AI chatbot interface with holographic UI elements',
+  },
+];
+---
+<Layout title="AI services for businesses | Training, tools & solutions">
+  <section class="container-content pt-16 pb-12 md:pt-20">
+    <span class="text-sm text-graphite/70">services</span>
+    <h1 class="mt-5">Services</h1>
+    <p class="mt-6 max-w-3xl text-lg text-graphite leading-relaxed">
+      At StartMonday.AI, we believe that learning AI should lead to action — fast. That's why everything we offer, from workshops to customized tools, is designed so that you can start applying your knowledge on Monday morning. We help organizations unlock the power of artificial intelligence through hands-on education, flexible support and customized solutions. Whether you want to build internal capabilities, accelerate innovation, or get practical help — you've come to the right place.
+    </p>
+  </section>
+
+  <section class="container-content pb-24">
+    {services.map((s, i) => (
+      <div class:list={["py-14 grid gap-10 md:grid-cols-2 md:items-center", i !== services.length - 1 && 'border-b border-line']}>
+        <div class:list={[i % 2 !== 0 && 'md:order-last']}>
+          <span class="eyebrow">{s.tag}</span>
+          <h2 class="mt-3">{s.title}</h2>
+          <p class="mt-4 text-base text-graphite/80">{s.audience}</p>
+          <p class="mt-4 text-lg text-graphite leading-relaxed">{s.body}</p>
+          <p class="mt-5 text-sm text-graphite"><span class="font-semibold text-ink">Formats:</span> {s.formats}</p>
+          <a href={s.href} class="btn btn-primary mt-8">{s.cta} →</a>
+        </div>
+        <div class:list={['overflow-hidden rounded-2xl aspect-[4/3]', i % 2 !== 0 && 'md:order-first']}>
+          <img
+            src={s.img}
+            alt={s.imgAlt}
+            class="w-full h-full object-cover"
+            loading="lazy"
+          />
+        </div>
+      </div>
+    ))}
+  </section>
+
+  <!-- Pricing guidance -->
+  <section class="bg-mist">
+    <div class="container-content py-20 md:py-28">
+      <span class="eyebrow">Investment</span>
+      <h2 class="mt-3">What to expect — pricing guide</h2>
+      <p class="mt-4 max-w-2xl text-graphite leading-relaxed">
+        We don't publish fixed prices because every engagement is scoped to your team size, format, and goals. Here's a realistic guide to help you plan.
+      </p>
+      <div class="mt-10 overflow-x-auto">
+        <table class="w-full text-sm border-collapse">
+          <thead>
+            <tr class="border-b border-line text-left">
+              <th class="pb-3 pr-8 font-semibold text-ink">Service</th>
+              <th class="pb-3 pr-8 font-semibold text-ink">Typical format</th>
+              <th class="pb-3 font-semibold text-ink">Starting point</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-line">
+            <tr>
+              <td class="py-4 pr-8 font-medium text-ink">AI Business Academy</td>
+              <td class="py-4 pr-8 text-graphite">Half-day workshop · Bootcamp · 12-week certificate</td>
+              <td class="py-4 text-graphite"><a href="/contact" class="font-medium text-ink underline underline-offset-2 hover:text-amber-600">Contact for a quote</a></td>
+            </tr>
+            <tr>
+              <td class="py-4 pr-8 font-medium text-ink">StartMonday+</td>
+              <td class="py-4 pr-8 text-graphite">Monthly retainer · Points-based subscription</td>
+              <td class="py-4 text-graphite">From €300 / month</td>
+            </tr>
+            <tr>
+              <td class="py-4 pr-8 font-medium text-ink">StartForward Accelerator</td>
+              <td class="py-4 pr-8 text-graphite">5-week cohort programme</td>
+              <td class="py-4 text-graphite"><a href="/contact" class="font-medium text-ink underline underline-offset-2 hover:text-amber-600">Contact for a quote</a></td>
+            </tr>
+            <tr>
+              <td class="py-4 pr-8 font-medium text-ink">AI Solutions Lab</td>
+              <td class="py-4 pr-8 text-graphite">Discovery sprint · Prototype · Full build</td>
+              <td class="py-4 text-graphite"><a href="/contact" class="font-medium text-ink underline underline-offset-2 hover:text-amber-600">Contact for a quote</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="mt-6 text-sm text-graphite">All engagements start with a <span class="font-semibold text-ink">free 20-minute discovery call</span>. No obligation.</p>
+      <a href="/contact" class="btn btn-primary mt-6">Book your free discovery call →</a>
+    </div>
+  </section>
+
+  <CTASection />
+</Layout>

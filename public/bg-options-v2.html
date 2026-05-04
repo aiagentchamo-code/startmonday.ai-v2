@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Background Options v2 — StartMonday.AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', sans-serif; background: #0e0e2c; color: #fff; padding: 2rem; }
+  h1 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.5rem; margin-bottom: 0.3rem; }
+  .subtitle { color: #8888aa; font-size: 0.85rem; margin-bottom: 2rem; }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+    gap: 2rem;
+  }
+
+  .card {
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1.5px solid #2a2a50;
+    background: #12122e;
+    transition: border-color 0.2s, transform 0.2s;
+    cursor: pointer;
+  }
+  .card:hover { border-color: #6C5CE7; transform: translateY(-3px); }
+
+  .preview {
+    position: relative;
+    width: 100%;
+    height: 280px;
+    overflow: hidden;
+    background: #F7F5FF;
+  }
+  canvas, .bg-layer { position: absolute; inset: 0; z-index: 1; }
+
+  /* Fake content */
+  .content {
+    position: absolute; inset: 0; z-index: 10;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 10px;
+    pointer-events: none;
+  }
+  .c-tag {
+    font-size: 0.68rem; font-weight: 600; letter-spacing: 0.08em;
+    color: #6C5CE7; background: rgba(108,92,231,0.1);
+    border: 1px solid rgba(108,92,231,0.25);
+    padding: 3px 10px; border-radius: 999px; text-transform: uppercase;
+  }
+  .c-h { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.25rem; font-weight: 800; color: #0E0E2C; text-align: center; }
+  .c-p { font-size: 0.75rem; color: #5B5B7A; text-align: center; width: 72%; line-height: 1.55; }
+  .c-btn {
+    background: #6C5CE7; color: #fff; border: none;
+    border-radius: 999px; padding: 6px 20px; font-size: 0.78rem; font-weight: 600;
+  }
+
+  .meta { padding: 0.9rem 1.1rem 1.1rem; }
+  .name { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.95rem; font-weight: 700; color: #d0d0f0; margin-bottom: 0.25rem; }
+  .desc { font-size: 0.78rem; color: #7070a0; line-height: 1.55; }
+
+  .footer { text-align: center; margin-top: 2rem; color: #50507a; font-size: 0.78rem; }
+</style>
+</head>
+<body>
+
+<h1>Background Options — v2</h1>
+<p class="subtitle">Fresher directions — less "ghost AI", more premium and distinctive.</p>
+
+<div class="grid">
+
+  <!-- D: Aurora Orbs -->
+  <div class="card">
+    <div class="preview" id="preview-d">
+      <div class="bg-layer" id="aurora"></div>
+      <div class="content">
+        <div class="c-tag">AI Recruiting</div>
+        <div class="c-h">Hire Smarter,<br>Not Harder</div>
+        <div class="c-p">Automate your recruitment workflow and find the best talent faster.</div>
+        <button class="c-btn">Get Started</button>
+      </div>
+    </div>
+    <div class="meta">
+      <div class="name">Option D — Aurora Gradient Orbs</div>
+      <div class="desc">Three large soft-focus gradient orbs in brand colours (purple, teal, warm) drift slowly in the background, blurring into each other. Premium, modern — think Google Gemini or Apple Intelligence aesthetic.</div>
+    </div>
+  </div>
+
+  <!-- E: Topographic Contours -->
+  <div class="card">
+    <div class="preview">
+      <canvas id="canvas-e"></canvas>
+      <div class="content">
+        <div class="c-tag">AI Recruiting</div>
+        <div class="c-h">Hire Smarter,<br>Not Harder</div>
+        <div class="c-p">Automate your recruitment workflow and find the best talent faster.</div>
+        <button class="c-btn">Get Started</button>
+      </div>
+    </div>
+    <div class="meta">
+      <div class="name">Option E — Topographic Contours</div>
+      <div class="desc">Slowly-shifting topographic contour lines — like a neural network's loss landscape or an AI embedding space. Mathematical, editorial, and nothing like the usual floating-dots look.</div>
+    </div>
+  </div>
+
+  <!-- F: Token Stream -->
+  <div class="card">
+    <div class="preview" id="preview-f">
+      <div class="bg-layer" id="token-bg"></div>
+      <div class="content">
+        <div class="c-tag">AI Recruiting</div>
+        <div class="c-h">Hire Smarter,<br>Not Harder</div>
+        <div class="c-p">Automate your recruitment workflow and find the best talent faster.</div>
+        <button class="c-btn">Get Started</button>
+      </div>
+    </div>
+    <div class="meta">
+      <div class="name">Option F — Token Stream</div>
+      <div class="desc">Domain words ("analyze", "match", "score", "automate"…) softly appear in rows, like an LLM generating text — but barely visible. Conceptual and brand-relevant; feels like a working AI rather than a sci-fi prop.</div>
+    </div>
+  </div>
+
+  <!-- G: Perlin Dot Wave -->
+  <div class="card">
+    <div class="preview">
+      <canvas id="canvas-g"></canvas>
+      <div class="content">
+        <div class="c-tag">AI Recruiting</div>
+        <div class="c-h">Hire Smarter,<br>Not Harder</div>
+        <div class="c-p">Automate your recruitment workflow and find the best talent faster.</div>
+        <button class="c-btn">Get Started</button>
+      </div>
+    </div>
+    <div class="meta">
+      <div class="name">Option G — Perlin Dot Wave</div>
+      <div class="desc">A tight grid of uniform dots deforms in smooth organic waves — like a quiet breathing pattern or a thought rippling through a system. Clean, minimal, and distinctly non-cliché.</div>
+    </div>
+  </div>
+
+</div>
+
+<p class="footer">Reply with D, E, F, or G to apply it to the site.</p>
+
+<script>
+/* ══════════════════════════════════
+   D — Aurora Gradient Orbs (CSS anim)
+══════════════════════════════════ */
+(function () {
+  const container = document.getElementById('aurora');
+  container.style.cssText = `
+    position:absolute;inset:0;overflow:hidden;
+    background:#F7F5FF;
+  `;
+  const style = document.createElement('style');
+  style.textContent = `
+    .orb {
+      position:absolute;
+      border-radius:50%;
+      filter:blur(55px);
+      opacity:0.55;
+      will-change:transform;
+    }
+    @keyframes drift1 {
+      0%,100%{transform:translate(0,0) scale(1)}
+      33%{transform:translate(30px,-20px) scale(1.08)}
+      66%{transform:translate(-20px,25px) scale(0.95)}
+    }
+    @keyframes drift2 {
+      0%,100%{transform:translate(0,0) scale(1)}
+      40%{transform:translate(-35px,15px) scale(1.06)}
+      70%{transform:translate(20px,-30px) scale(0.97)}
+    }
+    @keyframes drift3 {
+      0%,100%{transform:translate(0,0) scale(1)}
+      50%{transform:translate(25px,20px) scale(1.1)}
+    }
+  `;
+  document.head.appendChild(style);
+
+  const orbs = [
+    { w:260, h:200, top:-40, left:-40, bg:'radial-gradient(circle, rgba(108,92,231,0.7), transparent 70%)', anim:'drift1 12s ease-in-out infinite' },
+    { w:220, h:220, top:60,  left:160, bg:'radial-gradient(circle, rgba(94,234,212,0.65), transparent 70%)', anim:'drift2 15s ease-in-out infinite' },
+    { w:200, h:180, top:100, left:-10, bg:'radial-gradient(circle, rgba(255,138,101,0.55), transparent 70%)', anim:'drift3 10s ease-in-out infinite' },
+  ];
+
+  orbs.forEach(o => {
+    const el = document.createElement('div');
+    el.className = 'orb';
+    el.style.cssText = `
+      width:${o.w}px;height:${o.h}px;
+      top:${o.top}px;left:${o.left}px;
+      background:${o.bg};
+      animation:${o.anim};
+    `;
+    container.appendChild(el);
+  });
+})();
+
+/* ══════════════════════════════════
+   E — Topographic Contours
+══════════════════════════════════ */
+(function () {
+  const canvas = document.getElementById('canvas-e');
+  const frame = canvas.parentElement;
+  canvas.width = frame.offsetWidth;
+  canvas.height = frame.offsetHeight;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+
+  // Simplex-like noise via layered sines
+  function noise(x, y, t) {
+    return (
+      Math.sin(x * 0.018 + t * 0.4) * 0.4 +
+      Math.sin(y * 0.022 - t * 0.3) * 0.35 +
+      Math.sin((x + y) * 0.013 + t * 0.5) * 0.25
+    );
+  }
+
+  const LEVELS = 8;
+  let t = 0;
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    ctx.fillStyle = '#F7F5FF';
+    ctx.fillRect(0, 0, W, H);
+
+    const STEP = 6;
+    // Build height field
+    const cols = Math.ceil(W / STEP) + 1;
+    const rows = Math.ceil(H / STEP) + 1;
+    const field = [];
+    for (let r = 0; r < rows; r++) {
+      field[r] = [];
+      for (let c = 0; c < cols; c++) {
+        field[r][c] = noise(c * STEP, r * STEP, t);
+      }
+    }
+
+    // March squares for each contour level
+    for (let lv = 0; lv < LEVELS; lv++) {
+      const threshold = -0.9 + (lv / (LEVELS - 1)) * 1.8;
+      const frac = lv / (LEVELS - 1);
+      // interpolate color: purple → teal
+      const r = Math.round(108 + (94 - 108) * frac);
+      const g = Math.round(92 + (234 - 92) * frac);
+      const b = Math.round(231 + (212 - 231) * frac);
+      ctx.strokeStyle = `rgba(${r},${g},${b},0.22)`;
+      ctx.lineWidth = 1;
+
+      for (let row = 0; row < rows - 1; row++) {
+        for (let col = 0; col < cols - 1; col++) {
+          const x0 = col * STEP, y0 = row * STEP;
+          const v00 = field[row][col];
+          const v10 = field[row][col + 1];
+          const v01 = field[row + 1][col];
+          const v11 = field[row + 1][col + 1];
+
+          function lerp(a, b, va, vb) {
+            if (Math.abs(vb - va) < 1e-6) return a;
+            return a + (b - a) * (threshold - va) / (vb - va);
+          }
+
+          const idx =
+            (v00 > threshold ? 8 : 0) |
+            (v10 > threshold ? 4 : 0) |
+            (v11 > threshold ? 2 : 0) |
+            (v01 > threshold ? 1 : 0);
+
+          if (idx === 0 || idx === 15) continue;
+
+          const top   = { x: lerp(x0, x0 + STEP, v00, v10), y: y0 };
+          const right = { x: x0 + STEP, y: lerp(y0, y0 + STEP, v10, v11) };
+          const bot   = { x: lerp(x0, x0 + STEP, v01, v11), y: y0 + STEP };
+          const left  = { x: x0, y: lerp(y0, y0 + STEP, v00, v01) };
+
+          const edges = [];
+          if ([1,2,4,7,8,11,13,14].includes(idx)) edges.push([left, bot]);
+          if ([2,3,4,6,9,11,12,13].includes(idx)) edges.push([bot, right]);
+          if ([1,3,6,7,8,9,12,14].includes(idx)) edges.push([top, right]);
+          if ([1,2,6,7,8,9,13,14].includes(idx)) edges.push([top, left]);
+
+          edges.forEach(([a, b]) => {
+            ctx.beginPath();
+            ctx.moveTo(a.x, a.y);
+            ctx.lineTo(b.x, b.y);
+            ctx.stroke();
+          });
+        }
+      }
+    }
+
+    t += 0.004;
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+/* ══════════════════════════════════
+   F — Token Stream
+══════════════════════════════════ */
+(function () {
+  const container = document.getElementById('token-bg');
+  container.style.cssText = 'position:absolute;inset:0;overflow:hidden;background:#F7F5FF;';
+
+  const words = [
+    'analyze', 'match', 'score', 'automate', 'rank',
+    'shortlist', 'evaluate', 'predict', 'optimize', 'screen',
+    'qualify', 'hire', 'fit', 'assess', 'generate',
+    'compare', 'extract', 'recommend', 'classify', 'parse',
+    'review', 'infer', 'calibrate', 'pipeline', 'prompt',
+  ];
+
+  const W = container.offsetWidth || 360;
+  const H = container.offsetHeight || 280;
+  const COLS = 5;
+  const colW = W / COLS;
+
+  const tokenStyle = document.createElement('style');
+  tokenStyle.textContent = `
+    .tok {
+      position:absolute;
+      font-family:'Inter',sans-serif;
+      font-size:11px;
+      font-weight:600;
+      letter-spacing:0.05em;
+      color:#6C5CE7;
+      opacity:0;
+      pointer-events:none;
+      white-space:nowrap;
+    }
+    @keyframes tok-fade {
+      0%   { opacity:0; transform:translateY(4px); }
+      15%  { opacity:var(--peak); transform:translateY(0); }
+      70%  { opacity:var(--peak); transform:translateY(0); }
+      100% { opacity:0; transform:translateY(-4px); }
+    }
+  `;
+  document.head.appendChild(tokenStyle);
+
+  function spawnToken() {
+    const col   = Math.floor(Math.random() * COLS);
+    const row   = Math.floor(Math.random() * 7);
+    const word  = words[Math.floor(Math.random() * words.length)];
+    const isAccent = Math.random() < 0.15;
+
+    const el = document.createElement('span');
+    el.className = 'tok';
+    el.textContent = word;
+
+    const x = col * colW + Math.random() * (colW - 80);
+    const y = row * (H / 7) + Math.random() * 20;
+    const peak = (0.06 + Math.random() * 0.1).toFixed(2);
+    const dur  = 2800 + Math.random() * 2000;
+
+    el.style.cssText = `
+      left:${x}px; top:${y}px;
+      --peak:${peak};
+      color: ${isAccent ? '#FF8A65' : '#6C5CE7'};
+      animation: tok-fade ${dur}ms ease-in-out forwards;
+    `;
+
+    container.appendChild(el);
+    setTimeout(() => el.remove(), dur + 100);
+  }
+
+  setInterval(spawnToken, 220);
+  for (let i = 0; i < 18; i++) setTimeout(spawnToken, i * 80);
+})();
+
+/* ══════════════════════════════════
+   G — Perlin Dot Wave
+══════════════════════════════════ */
+(function () {
+  const canvas = document.getElementById('canvas-g');
+  const frame = canvas.parentElement;
+  canvas.width = frame.offsetWidth;
+  canvas.height = frame.offsetHeight;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+
+  const SPACING = 18;
+  const RADIUS  = 1.6;
+  const AMPLITUDE = 5;
+  let t = 0;
+
+  function wave(x, y, t) {
+    return (
+      Math.sin(x * 0.06 + t) * 0.5 +
+      Math.sin(y * 0.05 + t * 0.8) * 0.3 +
+      Math.sin((x + y) * 0.04 + t * 1.2) * 0.2
+    );
+  }
+
+  const cols = Math.ceil(W / SPACING) + 1;
+  const rows = Math.ceil(H / SPACING) + 1;
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    ctx.fillStyle = '#F7F5FF';
+    ctx.fillRect(0, 0, W, H);
+
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        const bx = c * SPACING;
+        const by = r * SPACING;
+        const n = wave(bx, by, t);       // -1 … 1
+        const dx = Math.sin(n * Math.PI) * AMPLITUDE;
+        const dy = Math.cos(n * Math.PI) * AMPLITUDE;
+        const x = bx + dx;
+        const y = by + dy;
+
+        // color: neutral → accent based on wave value
+        const norm = (n + 1) / 2;       // 0 … 1
+        const alpha = 0.12 + norm * 0.22;
+
+        // blend purple/teal
+        const red   = Math.round(108 + (94 - 108) * norm);
+        const green = Math.round(92  + (234 - 92)  * norm);
+        const blue  = Math.round(231 + (212 - 231) * norm);
+
+        ctx.beginPath();
+        ctx.arc(x, y, RADIUS, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${red},${green},${blue},${alpha})`;
+        ctx.fill();
+      }
+    }
+
+    t += 0.012;
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+</script>
+</body>
+</html>

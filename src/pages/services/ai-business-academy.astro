@@ -1,0 +1,122 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
+import FAQItem from '../../components/FAQItem.astro';
+import CTASection from '../../components/CTASection.astro';
+---
+<Layout title="AI Business Academy for businesses | Training & Certification">
+  <section class="container-content pt-16 md:pt-20 pb-12">
+    <nav aria-label="Breadcrumb" class="text-sm text-graphite/70 mb-4">
+      <a href="/services" class="hover:text-ink">Services</a> <span class="mx-2">/</span> AI Business Academy
+    </nav>
+    <span class="eyebrow">Academy</span>
+    <h1 class="mt-4">AI Business Academy</h1>
+    <p class="mt-5 max-w-2xl text-lg text-graphite">Unlock the power of AI for your business with our comprehensive educational programs.</p>
+  </section>
+
+  <section class="container-content pb-10">
+    <div class="overflow-hidden rounded-2xl aspect-[21/7]">
+      <img
+        src="/images/academy-boardroom.png"
+        alt="Facilitator presenting an AI workflow diagram to executives in a boardroom workshop"
+        class="w-full h-full object-cover"
+        loading="eager"
+        width="1200"
+        height="400"
+      />
+    </div>
+  </section>
+
+  <section class="container-content space-y-16 pb-16">
+    <div class="grid gap-10 md:grid-cols-[1fr_2fr] md:items-start border-t border-line pt-12">
+      <div>
+        <span class="eyebrow">Executive Programs</span>
+        <h2 class="mt-3 text-3xl">Workshops for better business results</h2>
+      </div>
+      <div class="space-y-5">
+        <ul class="prose-brand">
+          <li>2-day intensive workshops for business leaders</li>
+          <li>Focus on practical AI implementation and ROI</li>
+          <li>Customized sessions in different business domains</li>
+        </ul>
+        <div>
+          <h3 class="text-lg font-semibold">Workshop highlights</h3>
+          <ul class="prose-brand">
+            <li>Basic Principles and Tools of Generative AI</li>
+            <li>Prompt Engineering and Workflow Integration</li>
+            <li>Specialized sessions in: Marketing, Sales, Customer Service, Finance, Operations, HR, Legal</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid gap-10 md:grid-cols-[1fr_2fr] md:items-start border-t border-line pt-12">
+      <div>
+        <span class="eyebrow">Bootcamps</span>
+        <h2 class="mt-3 text-3xl">AI Implementation Bootcamps</h2>
+      </div>
+      <div class="space-y-5">
+        <ul class="prose-brand">
+          <li>3-day intensive programs (24 hours total)</li>
+          <li>Hands-on learning with up to 10 participants</li>
+          <li>Available online or on-site</li>
+        </ul>
+        <div>
+          <h3 class="text-lg font-semibold">Bootcamp topics</h3>
+          <ul class="prose-brand">
+            <li>Implementation of Generative AI</li>
+            <li>AI Ethics and Governance</li>
+            <li>AI Strategy and Transformation</li>
+            <li>AI for Sustainability</li>
+            <li>Data-driven Decision Making</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid gap-10 md:grid-cols-[1fr_2fr] md:items-start border-t border-line pt-12">
+      <div>
+        <span class="eyebrow">Certificate</span>
+        <h2 class="mt-3 text-3xl">AI Implementation Certificate Program</h2>
+      </div>
+      <div class="space-y-5">
+        <ul class="prose-brand">
+          <li>60-hour program over 12 weeks</li>
+          <li>Hybrid delivery with live and recorded sessions</li>
+          <li>Covers: Strategic Foundations, Implementation Methods, Specialized Tracks, Practical Application</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="grid gap-10 md:grid-cols-[1fr_2fr] md:items-start border-t border-line pt-12">
+      <div>
+        <span class="eyebrow">Summer School</span>
+        <h2 class="mt-3 text-3xl">Using AI in Business</h2>
+      </div>
+      <div>
+        <p class="prose-brand">A 48-hour immersive program for busy professionals.</p>
+      </div>
+    </div>
+
+    <div class="border-t border-line pt-12">
+      <div class="rounded bg-mist p-6 text-sm text-graphite inline-flex items-center gap-3">
+        <span class="tbd-chip">Pricing TBD</span>
+        Per-program pricing to be confirmed. Volume and in-company rates available on request.
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="container-content pb-20">
+    <SectionHeading eyebrow="FAQ" title="Academy — frequently asked" />
+    <div class="mt-10 max-w-3xl">
+      <FAQItem q="Who is this for?">Business leaders, team managers, and professionals who want to use AI in their daily work — no coding background required.</FAQItem>
+      <FAQItem q="Is the content technical?">Only as technical as it needs to be. We focus on application, not theory.</FAQItem>
+      <FAQItem q="Can it be delivered in-company?">Yes — every format can be adapted for an in-company cohort.</FAQItem>
+      <FAQItem q="Do participants receive a certificate?">Yes, for the Certificate Program and Bootcamps.</FAQItem>
+      <FAQItem q="What languages?">English and Dutch by default; Hungarian and German on request.</FAQItem>
+    </div>
+  </section>
+
+  <CTASection heading="Ready to build AI capability in your team?" cta="Talk to us" />
+</Layout>

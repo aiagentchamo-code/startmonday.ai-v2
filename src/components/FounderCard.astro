@@ -1,0 +1,21 @@
+---
+interface Props { name: string; title: string; role: string; initials: string; photo?: string; }
+const { name, title, role, initials, photo } = Astro.props;
+---
+<div class="flex flex-col gap-4">
+  {photo ? (
+    <div class="aspect-[4/5] w-full rounded overflow-hidden">
+      <img src={photo} alt={`Portrait of ${name}`} class="w-full h-full object-cover object-top" />
+    </div>
+  ) : (
+    <div class="aspect-[4/5] w-full rounded bg-gradient-to-br from-ink via-graphite to-ink/90 flex items-center justify-center text-5xl font-bold text-amber tracking-tight">
+      {initials}
+      <span class="sr-only">Portrait placeholder for {name}</span>
+    </div>
+  )}
+  <div>
+    <h3 class="text-xl font-semibold text-ink">{name}</h3>
+    <p class="text-sm text-graphite mt-1">{title}</p>
+    <p class="text-xs text-graphite/70 mt-0.5">{role}</p>
+  </div>
+</div>

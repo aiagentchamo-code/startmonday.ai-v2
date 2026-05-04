@@ -1,0 +1,42 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const resources = [
+  {
+    title: 'AI adoption checklist for teams',
+    body: 'A practical checklist to align goals, stakeholders, data, and workflows before rollout.',
+  },
+  {
+    title: 'Prompting fundamentals for business users',
+    body: 'A concise guide to writing prompts that improve consistency and reduce rework.',
+  },
+  {
+    title: 'How to pick your first AI use case',
+    body: 'A simple decision framework to prioritize use cases by impact, risk, and effort.',
+  },
+  {
+    title: 'AI governance starter template',
+    body: 'Starter policy sections covering tool access, data handling, and review workflows.',
+  },
+];
+---
+<Layout title="Resources | StartMonday.AI">
+  <section class="container-content pt-16 md:pt-20 pb-16">
+    <span class="eyebrow">Resources</span>
+    <h1 class="mt-4">Guides and templates to make AI useful at work.</h1>
+    <p class="mt-5 max-w-2xl text-lg text-graphite">
+      New resources are published regularly. If you want something specific, contact us and we can share relevant materials.
+    </p>
+  </section>
+  <section class="container-content pb-20">
+    <div class="grid gap-5 md:grid-cols-2">
+      {resources.map((resource) => (
+        <article class="card p-7">
+          <h2 class="text-xl">{resource.title}</h2>
+          <p class="mt-3 text-sm text-graphite">{resource.body}</p>
+          <a href="/contact" class="btn btn-secondary mt-6">Request this resource</a>
+        </article>
+      ))}
+    </div>
+  </section>
+</Layout>

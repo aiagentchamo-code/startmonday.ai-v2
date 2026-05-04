@@ -1,0 +1,40 @@
+---
+import Layout from '../layouts/Layout.astro';
+import CTASection from '../components/CTASection.astro';
+
+const tiles = [
+  { src: '/images/hero-workshop.png',           alt: 'Diverse team mid-discussion during an applied AI workshop session',                      span: 'md:col-span-2 md:row-span-2' },
+  { src: '/images/academy-workshop.png',         alt: 'Facilitator leading an AI strategy session at the whiteboard' },
+  { src: '/images/impression-culture.png',       alt: 'Candid team circle discussion at a StartMonday.AI event' },
+  { src: '/images/impression-training.png',      alt: 'Presenter explaining AI adoption to a team in a bright modern office' },
+  { src: '/images/impression-collaboration.png', alt: 'Team analysing data dashboards during a collaborative workshop' },
+  { src: '/images/impression-dashboard.png',     alt: 'Group reviewing an AI analytics dashboard on a large screen',                          span: 'md:col-span-2' },
+  { src: '/images/academy-boardroom.png',        alt: 'Executive AI training session in a boardroom setting' },
+  { src: '/images/startforward-accelerator.png', alt: 'StartForward accelerator cohort session — AI and sustainability programme' },
+  { src: '/images/about-team.png',               alt: 'StartMonday.AI team with workshop participants' },
+];
+---
+<Layout title="Impression | Workshops and events at StartMonday.AI">
+  <section class="container-content pt-16 md:pt-20 pb-12">
+    <span class="eyebrow">Impression</span>
+    <h1 class="mt-4">A look inside our workshops, bootcamps and events.</h1>
+    <p class="mt-5 max-w-2xl text-lg text-graphite">Photos from recent sessions with teams across Europe.</p>
+  </section>
+
+  <section class="container-content pb-20">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 auto-rows-[160px] md:auto-rows-[180px]">
+      {tiles.map(t => (
+        <div class:list={['rounded overflow-hidden', t.span ?? '']}>
+          <img
+            src={t.src}
+            alt={t.alt}
+            class="w-full h-full object-cover"
+            loading="lazy"
+          />
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <CTASection heading="Want to host a workshop with your team?" cta="Get in touch" />
+</Layout>

@@ -1,0 +1,8 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#0E2420"/>
+  <circle cx="1030" cy="110" r="220" fill="#2B7D6D" fill-opacity="0.42"/>
+  <circle cx="170" cy="540" r="260" fill="#5EEAD4" fill-opacity="0.28"/>
+  <circle cx="560" cy="20" r="220" fill="#E06535" fill-opacity="0.22"/>
+  <text x="96" y="278" fill="#F4F9F8" font-size="76" font-family="Inter, Arial, sans-serif" font-weight="700">StartMonday.AI</text>
+  <text x="96" y="352" fill="#FFD166" font-size="40" font-family="Inter, Arial, sans-serif" font-weight="600">AI training with immediate impact</text>
+</svg>

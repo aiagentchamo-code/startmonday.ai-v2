@@ -1,0 +1,251 @@
+---
+// Cinematic AI backdrop: animated neural mesh + floating data numbers.
+// Matches and extends the aesthetic of the live startmonday.ai site.
+---
+<div class="absolute inset-0 z-0 overflow-hidden pointer-events-none" aria-hidden="true">
+  <!-- Deep dark base -->
+  <div class="absolute inset-0" style="background: linear-gradient(135deg, #030d18 0%, #071525 45%, #040e1a 100%);"></div>
+  <!-- Subtle teal glow top-right, amber hint bottom-left -->
+  <div class="absolute inset-0" style="background: radial-gradient(ellipse 70% 60% at 75% 20%, rgba(14,116,144,0.18) 0%, transparent 70%), radial-gradient(ellipse 50% 50% at 15% 90%, rgba(180,83,9,0.12) 0%, transparent 65%);"></div>
+  <canvas id="ai-backdrop"></canvas>
+  <!-- Vignette to keep text readable -->
+  <div class="absolute inset-0" style="background: radial-gradient(ellipse 90% 80% at 50% 50%, transparent 35%, rgba(3,13,24,0.65) 100%);"></div>
+</div>
+
+<style>
+  #ai-backdrop {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+</style>
+
+<script is:inline>
+(function () {
+  const canvas = document.getElementById('ai-backdrop');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return;
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  let W = 0, H = 0, dpr = 1, raf = 0, t0 = 0;
+
+  // ── palette ──────────────────────────────────────────
+  const TEAL   = [32, 201, 185];
+  const CYAN   = [56, 189, 248];
+  const AMBER  = [245, 158, 11];
+  const WHITE  = [220, 240, 255];
+
+  // ── nodes ────────────────────────────────────────────
+  const NODE_COUNT = 80;
+  const CONNECT_DIST = 210;
+  let nodes = [];
+
+  function makeNode(spread) {
+    const accent = Math.random();
+    const col = accent < 0.65 ? TEAL : accent < 0.85 ? CYAN : accent < 0.95 ? WHITE : AMBER;
+    const speed = 0.04 + Math.random() * 0.18;
+    const angle = Math.random() * Math.PI * 2;
+    return {
+      x: spread ? Math.random() * W : (Math.random() < 0.5 ? -10 : W + 10),
+      y: spread ? Math.random() * H : Math.random() * H,
+      vx: Math.cos(angle) * speed,
+      vy: Math.sin(angle) * speed,
+      r: 1.5 + Math.random() * 3.5,
+      col,
+      alpha: 0.4 + Math.random() * 0.55,
+      phase: Math.random() * Math.PI * 2,
+      hub: Math.random() < 0.12,
+    };
+  }
+
+  // ── data numbers ─────────────────────────────────────
+  const NUM_COUNT = 28;
+  let dataNumbers = [];
+
+  const DATA_WORDS = [
+    '4479','3188','4824','2735','1210','3169','1446','0.97','99%',
+    'GPT','LLM','API','v2.1','∇','σ','λ','01','10','11','00',
+    '256','512','1024','2048','0xAF','0b1101','∞','Δ',
+  ];
+
+  function makeNum(spread) {
+    return {
+      x: Math.random() * W,
+      y: spread ? Math.random() * H : H + 20,
+      vy: -(0.08 + Math.random() * 0.22),
+      val: DATA_WORDS[Math.floor(Math.random() * DATA_WORDS.length)],
+      size: 10 + Math.random() * 14,
+      alpha: 0.04 + Math.random() * 0.10,
+      col: Math.random() < 0.6 ? TEAL : Math.random() < 0.5 ? CYAN : WHITE,
+    };
+  }
+
+  // ── circuit traces ────────────────────────────────────
+  const TRACE_COUNT = 14;
+  let traces = [];
+
+  function makeTrace() {
+    const horiz = Math.random() < 0.55;
+    return {
+      horiz,
+      x: Math.random() * W,
+      y: Math.random() * H,
+      len: 40 + Math.random() * 180,
+      alpha: 0.025 + Math.random() * 0.055,
+      col: Math.random() < 0.7 ? TEAL : CYAN,
+      // dot at end
+      dot: Math.random() < 0.5,
+    };
+  }
+
+  function seed() {
+    const area = W * H;
+    const n = Math.max(50, Math.min(100, Math.floor(area / 12000)));
+    nodes = Array.from({ length: n }, () => makeNode(true));
+    dataNumbers = Array.from({ length: NUM_COUNT }, () => makeNum(true));
+    traces = Array.from({ length: TRACE_COUNT }, () => makeTrace());
+  }
+
+  function resize() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const rect = canvas.getBoundingClientRect();
+    W = rect.width; H = rect.height;
+    canvas.width  = Math.floor(W * dpr);
+    canvas.height = Math.floor(H * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    seed();
+  }
+
+  function rgba(col, a) {
+    return `rgba(${col[0]},${col[1]},${col[2]},${a})`;
+  }
+
+  function drawFrame(ts) {
+    const t = ts * 0.001;
+    ctx.clearRect(0, 0, W, H);
+
+    // ── circuit traces (static decoration) ──
+    for (const tr of traces) {
+      ctx.save();
+      ctx.globalAlpha = tr.alpha;
+      ctx.strokeStyle = rgba(tr.col, 1);
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      if (tr.horiz) {
+        ctx.moveTo(tr.x, tr.y);
+        ctx.lineTo(tr.x + tr.len, tr.y);
+        if (tr.dot) {
+          ctx.moveTo(tr.x + tr.len + 4, tr.y);
+          ctx.arc(tr.x + tr.len + 4, tr.y, 2.5, 0, Math.PI * 2);
+        }
+      } else {
+        ctx.moveTo(tr.x, tr.y);
+        ctx.lineTo(tr.x, tr.y + tr.len);
+        if (tr.dot) {
+          ctx.moveTo(tr.x, tr.y + tr.len + 4);
+          ctx.arc(tr.x, tr.y + tr.len + 4, 2.5, 0, Math.PI * 2);
+        }
+      }
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    // ── connecting lines between nearby nodes ──
+    for (let i = 0; i < nodes.length; i++) {
+      const a = nodes[i];
+      for (let j = i + 1; j < nodes.length; j++) {
+        const b = nodes[j];
+        const dx = a.x - b.x, dy = a.y - b.y;
+        const d = Math.sqrt(dx * dx + dy * dy);
+        if (d < CONNECT_DIST) {
+          const lineAlpha = (1 - d / CONNECT_DIST) * 0.45;
+          ctx.save();
+          ctx.globalAlpha = lineAlpha;
+          // glow on lines
+          ctx.shadowBlur = 6;
+          ctx.shadowColor = rgba(TEAL, 0.5);
+          ctx.strokeStyle = rgba(TEAL, 0.7);
+          ctx.lineWidth = 0.6;
+          ctx.beginPath();
+          ctx.moveTo(a.x, a.y);
+          ctx.lineTo(b.x, b.y);
+          ctx.stroke();
+          ctx.restore();
+        }
+      }
+    }
+
+    // ── nodes ──
+    for (const n of nodes) {
+      // update position
+      n.x += n.vx;
+      n.y += n.vy;
+      // wrap
+      if (n.x < -20) n.x = W + 20;
+      else if (n.x > W + 20) n.x = -20;
+      if (n.y < -20) n.y = H + 20;
+      else if (n.y > H + 20) n.y = -20;
+
+      const pulse = 0.7 + 0.3 * Math.sin(t * 1.2 + n.phase);
+      const r = n.hub ? n.r * 1.8 : n.r;
+      const a = n.alpha * pulse;
+
+      ctx.save();
+      ctx.shadowBlur = n.hub ? 22 : 10;
+      ctx.shadowColor = rgba(n.col, 0.9);
+      ctx.globalAlpha = a;
+      ctx.fillStyle = rgba(n.col, 1);
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, r, 0, Math.PI * 2);
+      ctx.fill();
+
+      if (n.hub) {
+        ctx.globalAlpha = a * 0.25;
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, r * 3.5, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.restore();
+    }
+
+    // ── floating data numbers ──
+    for (const dn of dataNumbers) {
+      dn.y += dn.vy;
+      if (dn.y < -30) {
+        dn.y = H + 20;
+        dn.x = Math.random() * W;
+        dn.val = DATA_WORDS[Math.floor(Math.random() * DATA_WORDS.length)];
+      }
+      ctx.save();
+      ctx.globalAlpha = dn.alpha;
+      ctx.fillStyle = rgba(dn.col, 1);
+      ctx.font = `500 ${dn.size}px ui-monospace, "SF Mono", Menlo, monospace`;
+      ctx.fillText(dn.val, dn.x, dn.y);
+      ctx.restore();
+    }
+
+    raf = requestAnimationFrame(drawFrame);
+  }
+
+  function start() {
+    resize();
+    if (reduceMotion) {
+      drawFrame(0);
+      cancelAnimationFrame(raf);
+    } else {
+      raf = requestAnimationFrame(drawFrame);
+    }
+  }
+
+  window.addEventListener('resize', () => {
+    cancelAnimationFrame(raf);
+    start();
+  });
+
+  // wait a tick so the canvas has layout dimensions
+  requestAnimationFrame(() => start());
+})();
+</script>

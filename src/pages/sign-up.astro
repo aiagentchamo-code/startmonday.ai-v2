@@ -1,0 +1,145 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import { subscriptionPlans } from '../lib/subscriptionPlans';
+
+const planCards = [
+  { key: 'starter', tag: 'Starter', title: 'StartMonday+ Starter', body: 'For individuals and small teams getting started with applied AI.', cta: 'Choose Starter' },
+  { key: 'scaler', tag: 'Scaler', title: 'StartMonday+ Scaler', body: 'For teams building recurring AI workflows and cross-functional use cases.', cta: 'Choose Scaler' },
+  { key: 'power', tag: 'Power', title: 'StartMonday+ Power', body: 'For organizations needing higher support capacity and faster implementation.', cta: 'Choose Power' },
+] as const;
+---
+<Layout title="Sign up | Join a program at StartMonday.AI">
+  <section class="container-content pt-16 md:pt-20 pb-12">
+    <span class="eyebrow">Sign up</span>
+    <h1 class="mt-4">Start your subscription in minutes.</h1>
+    <p class="mt-5 max-w-2xl text-lg text-graphite">Choose a plan, fill in your details, and continue to secure checkout.</p>
+  </section>
+
+  <section class="container-content pb-20 grid gap-6 md:grid-cols-3">
+    {planCards.map(card => (
+      <div class="rounded border border-line bg-paper p-8 flex flex-col gap-4">
+        <span class="eyebrow">{card.tag}</span>
+        <h3 class="text-xl font-semibold">{card.title}</h3>
+        <p class="text-graphite text-sm">{card.body}</p>
+        <button class="btn btn-secondary mt-auto plan-select" type="button" data-plan={card.key}>{card.cta}</button>
+      </div>
+    ))}
+  </section>
+
+  <section class="bg-mist">
+    <div class="container-content py-20">
+      <SectionHeading eyebrow="Checkout" title="Complete your subscription setup" lead="You will be redirected to Stripe for secure payment and billing." />
+      <form id="subscription-checkout-form" class="mt-10 grid gap-5 md:grid-cols-2 max-w-3xl">
+        <div>
+          <label for="su-name" class="block text-sm font-medium text-ink mb-1.5">Full name *</label>
+          <input id="su-name" name="fullName" type="text" required class="w-full rounded-input border border-line bg-paper px-3 py-2.5 text-sm focus:border-ink outline-none" />
+        </div>
+        <div>
+          <label for="su-email" class="block text-sm font-medium text-ink mb-1.5">Work email *</label>
+          <input id="su-email" name="email" type="email" required autocomplete="email" class="w-full rounded-input border border-line bg-paper px-3 py-2.5 text-sm focus:border-ink outline-none" />
+        </div>
+        <div>
+          <label for="su-company" class="block text-sm font-medium text-ink mb-1.5">Company</label>
+          <input id="su-company" name="company" type="text" autocomplete="organization" class="w-full rounded-input border border-line bg-paper px-3 py-2.5 text-sm focus:border-ink outline-none" />
+        </div>
+        <div>
+          <label for="su-plan" class="block text-sm font-medium text-ink mb-1.5">Plan *</label>
+          <select id="su-plan" name="plan" required class="w-full rounded-input border border-line bg-paper px-3 py-2.5 text-sm focus:border-ink outline-none">
+            <option value="">Select a plan</option>
+            <option value="starter">{subscriptionPlans.starter.label} ({subscriptionPlans.starter.monthlyPrice}/month)</option>
+            <option value="scaler">{subscriptionPlans.scaler.label} ({subscriptionPlans.scaler.monthlyPrice}/month)</option>
+            <option value="power">{subscriptionPlans.power.label} ({subscriptionPlans.power.monthlyPrice}/month)</option>
+          </select>
+        </div>
+        <div class="md:col-span-2 rounded border border-line bg-paper p-4 text-sm text-graphite">
+          <p class="font-semibold text-ink">What happens next</p>
+          <ol class="mt-2 list-decimal pl-5 space-y-1">
+            <li>You continue to secure Stripe checkout.</li>
+            <li>Your subscription starts immediately after payment.</li>
+            <li>You receive an invoice and onboarding email.</li>
+          </ol>
+        </div>
+        <div class="md:col-span-2 flex items-center gap-3 flex-wrap">
+          <button type="submit" class="btn btn-primary">Continue to secure checkout</button>
+          <p id="signup-feedback" class="text-sm text-graphite" aria-live="polite"></p>
+        </div>
+      </form>
+
+      <div class="mt-12 border-t border-line pt-8">
+        <h3 class="text-xl font-semibold">Already subscribed?</h3>
+        <p class="mt-2 text-sm text-graphite">Open the customer billing portal to update payment method, invoices, or cancel.</p>
+        <form id="billing-portal-form" class="mt-4 flex flex-wrap items-center gap-3">
+          <input name="customerId" type="text" placeholder="Stripe customer ID (cus_...)" required class="min-w-[280px] rounded-input border border-line bg-paper px-3 py-2.5 text-sm focus:border-ink outline-none" />
+          <button type="submit" class="btn btn-secondary">Open billing portal</button>
+          <p id="billing-feedback" class="text-sm text-graphite" aria-live="polite"></p>
+        </form>
+      </div>
+    </div>
+  </section>
+</Layout>
+<script is:inline>
+  (function () {
+    var form = document.getElementById('subscription-checkout-form');
+    var planSelectButtons = document.querySelectorAll('.plan-select');
+    var planSelect = document.getElementById('su-plan');
+    var feedback = document.getElementById('signup-feedback');
+    var billingForm = document.getElementById('billing-portal-form');
+    var billingFeedback = document.getElementById('billing-feedback');
+
+    planSelectButtons.forEach(function (button) {
+      button.addEventListener('click', function () {
+        var selected = button.getAttribute('data-plan');
+        if (planSelect && selected) {
+          planSelect.value = selected;
+          planSelect.focus();
+        }
+      });
+    });
+
+    var urlPlan = new URLSearchParams(window.location.search).get('plan');
+    if (planSelect && urlPlan && ['starter', 'scaler', 'power'].indexOf(urlPlan) > -1) {
+      planSelect.value = urlPlan;
+    }
+
+    if (!form || !feedback) return;
+    form.addEventListener('submit', async function (event) {
+      event.preventDefault();
+      feedback.textContent = 'Creating secure checkout...';
+      try {
+        var response = await fetch('/api/create-checkout-session', { method: 'POST', body: new FormData(form) });
+        var payload = await response.json();
+        if (!response.ok) {
+          throw new Error((payload && payload.error) || 'Failed request');
+        }
+        if (payload && payload.url) {
+          window.location.href = payload.url;
+          return;
+        }
+        throw new Error('Missing checkout URL');
+      } catch (error) {
+        feedback.textContent = (error && error.message) || 'Could not start checkout. Please try again or email hello@startmonday.ai.';
+      }
+    });
+
+    if (!billingForm || !billingFeedback) return;
+    billingForm.addEventListener('submit', async function (event) {
+      event.preventDefault();
+      billingFeedback.textContent = 'Opening billing portal...';
+      try {
+        var response = await fetch('/api/create-billing-portal-session', { method: 'POST', body: new FormData(billingForm) });
+        var payload = await response.json();
+        if (!response.ok) {
+          throw new Error((payload && payload.error) || 'Failed request');
+        }
+        if (payload && payload.url) {
+          window.location.href = payload.url;
+          return;
+        }
+        throw new Error('Missing billing URL');
+      } catch (error) {
+        billingFeedback.textContent = (error && error.message) || 'Could not open billing portal. Please contact hello@startmonday.ai.';
+      }
+    });
+  })();
+</script>

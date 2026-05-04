@@ -1,0 +1,108 @@
+---
+import Layout from '../layouts/Layout.astro';
+import FounderCard from '../components/FounderCard.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import CTASection from '../components/CTASection.astro';
+---
+<Layout title="About us | Experienced leaders in AI & digital transformation">
+  <section class="container-content pt-16 md:pt-20 pb-16">
+    <span class="eyebrow">About us</span>
+    <h1 class="mt-4 max-w-4xl">Two leaders. Seventy years of digital experience.</h1>
+    <p class="mt-6 max-w-3xl text-lg text-graphite leading-relaxed">
+      Rolf Neleman and Béla Paul Sándor combine more than 70 years of experience in digital strategy, innovation and applied AI. With backgrounds in marketing, technology and leadership, they help organizations grow in a rapidly changing digital world.
+    </p>
+  </section>
+
+  <!-- Rolf -->
+  <section class="container-content pb-20 border-t border-line pt-16">
+    <div class="grid gap-10 md:grid-cols-[1fr_2fr]">
+      <FounderCard name="Rolf Neleman" title="Expert in Digital Strategy and AI" role="Managing Director, StartMonday.AI" initials="RN" photo="/rolf.jpg" />
+      <div class="prose-brand">
+        <p>Rolf Neleman is an experienced professional with a career spanning more than 35 years in digital marketing, education and business management. As Managing Director of StartMonday.AI, Rolf supports companies in strengthening their AI strategy and business growth. Working as a consultant, he helps organizations improve their digital presence and get more out of their business using the latest AI technologies.</p>
+        <p>He teaches at the Digital Transformation Management program of SRH Hogeschool in Haarlem and has been teaching Online Marketing at De Haagse Hogeschool since 2015.</p>
+        <h4 class="text-ink mt-6">Career highlights</h4>
+        <ul>
+          <li>Managed several businesses including a call center and a publishing company</li>
+          <li>Leadership roles at Tweedenummer.nl and Maison en France</li>
+          <li>Early career at KPN Telecom and project management in the transportation sector</li>
+          <li>Known for creativity and innovative thinking</li>
+        </ul>
+        <h4 class="text-ink mt-6">AI Workshop track record</h4>
+        <ul>
+          <li>Over the past 18 months, conducted numerous workshops on applied AI</li>
+          <li>Focus: how to use AI effectively across different roles and sectors</li>
+          <li>Sectors served: real estate, tourism, engineering, and more</li>
+          <li>More than 150 people have participated in his AI workshops to date</li>
+        </ul>
+        <p class="mt-6 text-sm text-graphite/70">Contact: <a href="mailto:rolf@startmonday.ai" class="underline">rolf@startmonday.ai</a> · <a href="https://www.linkedin.com" target="_blank" rel="noreferrer" class="underline">LinkedIn</a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Béla -->
+  <section class="container-content pb-20 border-t border-line pt-16">
+    <div class="grid gap-10 md:grid-cols-[1fr_2fr]">
+      <FounderCard name="Béla Paul Sándor" title="Digital Visionary and AI Strategist" role="Co-founder, Senior Digital Strategy Advisor" initials="BS" photo="/bela.jpg" />
+      <div class="prose-brand">
+        <p>Béla Paul Sándor is a seasoned global digital leader and business strategist with more than 35 years of experience in driving transformational change. His career spans blue-chip enterprises and SMEs, including executive positions at Cisco Systems, where he built and led global business units delivering innovative digital and AI-driven solutions.</p>
+        <p>His expertise lies in leveraging applied AI and advanced technologies to create business value, develop new data-driven services, and advise on sustainability and circular business models.</p>
+        <h4 class="text-ink mt-6">Career highlights</h4>
+        <ul>
+          <li>Director and Global GM of Vertical Solutions at Cisco Systems</li>
+          <li>Built and led global business units at Cisco delivering AI-driven digital solutions</li>
+          <li>Senior Digital Strategy Advisor (current)</li>
+          <li>Delivered multi-million dollar business opportunities for employers and clients</li>
+          <li>Executive trainer and mentor in Digital Transformation Management and Applied AI</li>
+        </ul>
+        <h4 class="text-ink mt-6">Focus areas</h4>
+        <ul>
+          <li>Applied AI integrated into business strategies for practical, impactful results</li>
+          <li>AI-driven platforms and strategies for SMEs and large enterprises</li>
+          <li>Enabling organizations to implement innovative products and services for long-term competitiveness</li>
+          <li>Sustainability and circular business models</li>
+        </ul>
+        <p class="mt-6 text-sm text-graphite/70">Contact: <a href="mailto:bela@startmonday.ai" class="underline">bela@startmonday.ai</a> · <a href="https://www.linkedin.com" target="_blank" rel="noreferrer" class="underline">LinkedIn</a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team visual -->
+  <section class="container-content pb-20">
+    <div class="overflow-hidden rounded-2xl aspect-[21/7]">
+      <img
+        src="/images/about-team.png"
+        alt="StartMonday.AI team with workshop participants — a confident, diverse group of professionals"
+        class="w-full h-full object-cover object-center"
+        loading="lazy"
+        width="1200"
+        height="400"
+      />
+    </div>
+  </section>
+
+  <!-- Approach -->
+  <section class="bg-mist">
+    <div class="container-content py-20">
+      <SectionHeading eyebrow="Our approach" title="Three principles guide every engagement." />
+      <div class="mt-10 grid gap-6 md:grid-cols-3">
+        <div class="rounded bg-paper border border-line p-6">
+          <span class="text-3xl font-bold text-amber">01</span>
+          <h3 class="mt-2 text-lg font-semibold">Apply, don't admire</h3>
+          <p class="mt-2 text-sm text-graphite">We measure success in what gets used on Monday — not slides delivered.</p>
+        </div>
+        <div class="rounded bg-paper border border-line p-6">
+          <span class="text-3xl font-bold text-amber">02</span>
+          <h3 class="mt-2 text-lg font-semibold">Human first</h3>
+          <p class="mt-2 text-sm text-graphite">AI is a tool; judgment stays with your people.</p>
+        </div>
+        <div class="rounded bg-paper border border-line p-6">
+          <span class="text-3xl font-bold text-amber">03</span>
+          <h3 class="mt-2 text-lg font-semibold">Ethics by default</h3>
+          <p class="mt-2 text-sm text-graphite">Privacy, transparency, and fairness are part of the brief, not an afterthought.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CTASection />
+</Layout>

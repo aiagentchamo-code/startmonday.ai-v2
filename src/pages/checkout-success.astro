@@ -1,0 +1,54 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getStripeClient } from '../lib/stripe';
+import { subscriptionPlans } from '../lib/subscriptionPlans';
+
+const sessionId = Astro.url.searchParams.get('session_id');
+
+let planLabel = '';
+let points = 0;
+let customerName = '';
+
+if (!sessionId) {
+  return Astro.redirect('/sign-up');
+}
+
+try {
+  const stripe = getStripeClient();
+  const session = await stripe.checkout.sessions.retrieve(sessionId);
+
+  if (session.payment_status !== 'paid') {
+    return Astro.redirect('/sign-up');
+  }
+
+  const planKey = session.metadata?.selectedPlan ?? '';
+  const plan = planKey in subscriptionPlans
+    ? subscriptionPlans[planKey as keyof typeof subscriptionPlans]
+    : null;
+  planLabel = plan?.label ?? planKey;
+  points = plan?.points ?? 0;
+  customerName = session.metadata?.fullName ?? '';
+} catch {
+  return Astro.redirect('/sign-up');
+}
+---
+<Layout title="Subscription confirmed | StartMonday.AI" noindex={true}>
+  <section class="container-content py-24 text-center">
+    <span class="eyebrow">Success</span>
+    <h1 class="mt-4">
+      {customerName ? `Welcome, ${customerName}.` : 'Subscription confirmed.'}
+    </h1>
+    <p class="mx-auto mt-4 max-w-xl text-graphite">
+      Your <strong>StartMonday+ {planLabel}</strong> subscription is active.
+      {points > 0 && <> You have <strong>{points} StartPoints</strong> available this month.</>}
+      A confirmation email is on its way.
+    </p>
+    <div class="mt-8 flex justify-center gap-3 flex-wrap">
+      <a href="/login" class="btn btn-primary">Access your dashboard</a>
+      <a href="/contact" class="btn btn-secondary">Contact onboarding</a>
+    </div>
+    <p class="mt-4 text-sm text-graphite">
+      Log in with the email you used at checkout to view your subscription and manage billing.
+    </p>
+  </section>
+</Layout>

@@ -1,0 +1,97 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+<Layout title="Contact | StartMonday.AI">
+  <section class="container-content pt-16 md:pt-20 pb-20">
+    <div class="grid gap-12 md:grid-cols-[2fr_1fr]">
+      <div>
+        <span class="eyebrow">Contact</span>
+        <h1 class="mt-4">Contact us</h1>
+        <p class="mt-5 max-w-2xl text-lg text-graphite">Tell us what you're trying to do. We'll reply within one business day.</p>
+
+        <form id="contact-form" class="mt-10 space-y-5">
+          <div class="grid gap-5 md:grid-cols-2">
+            <div>
+              <label for="name" class="block text-sm font-medium text-ink mb-1.5">Name *</label>
+              <input id="name" name="name" type="text" required class="w-full rounded-input border border-line bg-paper px-3 py-2.5 text-sm focus:border-ink outline-none" />
+            </div>
+            <div>
+              <label for="email" class="block text-sm font-medium text-ink mb-1.5">Email *</label>
+              <input id="email" name="email" type="email" required class="w-full rounded-input border border-line bg-paper px-3 py-2.5 text-sm focus:border-ink outline-none" />
+            </div>
+            <div>
+              <label for="org" class="block text-sm font-medium text-ink mb-1.5">Organization</label>
+              <input id="org" name="organization" type="text" class="w-full rounded-input border border-line bg-paper px-3 py-2.5 text-sm focus:border-ink outline-none" />
+            </div>
+            <div>
+              <label for="role" class="block text-sm font-medium text-ink mb-1.5">Role</label>
+              <input id="role" name="role" type="text" class="w-full rounded-input border border-line bg-paper px-3 py-2.5 text-sm focus:border-ink outline-none" />
+            </div>
+          </div>
+          <div>
+            <label for="interest" class="block text-sm font-medium text-ink mb-1.5">I'm interested in *</label>
+            <select id="interest" name="interest" required class="w-full rounded-input border border-line bg-paper px-3 py-2.5 text-sm focus:border-ink outline-none">
+              <option value="">Select…</option>
+              <option>AI Business Academy</option>
+              <option>StartMonday+</option>
+              <option>StartForward</option>
+              <option>AI Solutions Lab</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div>
+            <label for="message" class="block text-sm font-medium text-ink mb-1.5">Message *</label>
+            <textarea id="message" name="message" rows="5" required class="w-full rounded-input border border-line bg-paper px-3 py-2.5 text-sm focus:border-ink outline-none"></textarea>
+          </div>
+          <label class="flex items-start gap-2 text-sm text-graphite">
+            <input type="checkbox" name="privacyAccepted" required class="mt-1" />
+            <span>I agree to the <a href="/privacy-policy" class="underline hover:text-ink">privacy policy</a>.</span>
+          </label>
+          <div class="flex items-center gap-3 flex-wrap">
+            <button type="submit" class="btn btn-primary">Send message</button>
+            <p id="contact-feedback" class="text-sm text-graphite" aria-live="polite"></p>
+          </div>
+        </form>
+      </div>
+
+      <aside class="space-y-6 rounded bg-mist border border-line p-6 h-max">
+        <div>
+          <h3 class="text-sm font-semibold text-ink">Direct contact</h3>
+          <ul class="mt-2 text-sm text-graphite space-y-1">
+            <li>Email: <a href="mailto:hello@startmonday.ai" class="underline hover:text-ink">hello@startmonday.ai</a></li>
+            <li>Phone: <a href="tel:+31301234567" class="underline hover:text-ink">+31 30 123 4567</a></li>
+            <li>Address: Utrecht, The Netherlands</li>
+            <li>Hours: Mon–Fri, 09:00–17:00 CET</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-sm font-semibold text-ink">Socials</h3>
+          <ul class="mt-2 text-sm text-graphite space-y-1">
+            <li><a href="https://www.linkedin.com/company/startmonday-ai/" target="_blank" rel="noreferrer" class="underline hover:text-ink">LinkedIn (company)</a></li>
+            <li><a href="https://www.linkedin.com/in/rolf-neleman-968595a/" target="_blank" rel="noreferrer" class="underline hover:text-ink">LinkedIn - Rolf</a></li>
+            <li><a href="https://www.linkedin.com/in/belapsandor/" target="_blank" rel="noreferrer" class="underline hover:text-ink">LinkedIn - Bela</a></li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </section>
+</Layout>
+<script is:inline>
+  (function () {
+    var form = document.getElementById('contact-form');
+    var feedback = document.getElementById('contact-feedback');
+    if (!form || !feedback) return;
+    form.addEventListener('submit', async function (event) {
+      event.preventDefault();
+      feedback.textContent = 'Sending...';
+      try {
+        var response = await fetch('/api/contact', { method: 'POST', body: new FormData(form) });
+        if (!response.ok) throw new Error('Failed request');
+        feedback.textContent = 'Message sent. We will reply within one business day.';
+        form.reset();
+      } catch (error) {
+        feedback.textContent = 'Could not send right now. Please email hello@startmonday.ai.';
+      }
+    });
+  })();
+</script>

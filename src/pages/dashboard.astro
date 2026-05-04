@@ -1,0 +1,169 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+// Middleware guarantees user is non-null here
+const user = Astro.locals.user!;
+const supabase = Astro.locals.supabase;
+
+const { data: customer } = await supabase
+  .from('customers')
+  .select(`
+    id, full_name, company, stripe_customer_id,
+    subscriptions (
+      id, plan_label, plan_key, points, status, current_period_end, created_at
+    )
+  `)
+  .eq('email', user.email!)
+  .maybeSingle();
+
+type Subscription = {
+  id: string;
+  plan_label: string;
+  plan_key: string;
+  points: number;
+  status: string;
+  current_period_end: string | null;
+  created_at: string;
+};
+
+const subscriptions: Subscription[] = (customer?.subscriptions as Subscription[]) ?? [];
+const active = subscriptions.find((s) => s.status === 'active') ?? subscriptions[0] ?? null;
+
+const periodEnd = active?.current_period_end
+  ? new Date(active.current_period_end).toLocaleDateString('en-IE', {
+      day: 'numeric', month: 'long', year: 'numeric',
+    })
+  : null;
+
+const statusLabel: Record<string, string> = {
+  active:    'Active',
+  past_due:  'Past due',
+  canceled:  'Cancelled',
+  trialing:  'Trial',
+  paused:    'Paused',
+  incomplete: 'Incomplete',
+};
+
+const statusColor: Record<string, string> = {
+  active:   'bg-green-100 text-green-800',
+  past_due: 'bg-amber-100 text-amber-800',
+  canceled: 'bg-stone-100 text-stone-600',
+  default:  'bg-stone-100 text-stone-600',
+};
+---
+<Layout title="Dashboard | StartMonday.AI" noindex={true}>
+  <section class="container-content py-24">
+    <!-- Header -->
+    <div class="flex items-start justify-between gap-4 flex-wrap">
+      <div>
+        <span class="eyebrow">Your account</span>
+        <h1 class="mt-2">
+          {customer?.full_name ? `Welcome back, ${customer.full_name.split(' ')[0]}.` : 'Dashboard'}
+        </h1>
+        <p class="mt-1 text-sm text-graphite">{user.email}</p>
+      </div>
+      <form method="POST" action="/api/auth/logout">
+        <button type="submit" class="btn btn-secondary text-sm">Sign out</button>
+      </form>
+    </div>
+
+    <div class="mt-12 grid gap-6 md:grid-cols-2">
+      <!-- Subscription card -->
+      {active ? (
+        <div class="rounded-2xl border border-stone-200 p-6">
+          <div class="flex items-center justify-between gap-2">
+            <h2 class="text-base font-semibold">Subscription</h2>
+            <span class={`rounded-full px-2.5 py-0.5 text-xs font-medium ${statusColor[active.status] ?? statusColor.default}`}>
+              {statusLabel[active.status] ?? active.status}
+            </span>
+          </div>
+
+          <p class="mt-4 text-2xl font-bold">StartMonday+ {active.plan_label}</p>
+
+          <dl class="mt-4 space-y-2 text-sm">
+            <div class="flex justify-between">
+              <dt class="text-graphite">StartPoints this month</dt>
+              <dd class="font-medium">{active.points}</dd>
+            </div>
+            {periodEnd && (
+              <div class="flex justify-between">
+                <dt class="text-graphite">Next billing date</dt>
+                <dd class="font-medium">{periodEnd}</dd>
+              </div>
+            )}
+            {customer?.company && (
+              <div class="flex justify-between">
+                <dt class="text-graphite">Company</dt>
+                <dd class="font-medium">{customer.company}</dd>
+              </div>
+            )}
+          </dl>
+
+          {customer?.stripe_customer_id && (
+            <div class="mt-6">
+              <button
+                id="billing-portal-btn"
+                data-customer-id={customer.stripe_customer_id}
+                class="btn btn-secondary w-full text-sm"
+              >
+                Manage billing &amp; invoices
+              </button>
+            </div>
+          )}
+        </div>
+      ) : (
+        <div class="rounded-2xl border border-stone-200 p-6">
+          <h2 class="text-base font-semibold">Subscription</h2>
+          <p class="mt-3 text-sm text-graphite">
+            No active subscription found for <strong>{user.email}</strong>.
+            {customer
+              ? ' Your purchase data may still be processing — check back in a moment.'
+              : ' If you have purchased a plan, make sure you log in with the same email used at checkout.'}
+          </p>
+          <a href="/sign-up" class="btn btn-primary mt-4 inline-block text-sm">
+            View plans
+          </a>
+        </div>
+      )}
+
+      <!-- Support card -->
+      <div class="rounded-2xl border border-stone-200 p-6">
+        <h2 class="text-base font-semibold">Need help?</h2>
+        <p class="mt-3 text-sm text-graphite">
+          Your dedicated onboarding team is ready. Reach out any time.
+        </p>
+        <div class="mt-6 space-y-2">
+          <a href="/contact" class="btn btn-primary w-full text-sm text-center block">
+            Contact onboarding
+          </a>
+          <a href="/resources" class="btn btn-secondary w-full text-sm text-center block">
+            View resources
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const btn = document.getElementById('billing-portal-btn') as HTMLButtonElement | null;
+    btn?.addEventListener('click', async () => {
+      const customerId = btn.dataset.customerId ?? '';
+      btn.disabled = true;
+      btn.textContent = 'Redirecting…';
+
+      const body = new FormData();
+      body.set('customerId', customerId);
+
+      const res = await fetch('/api/create-billing-portal-session', { method: 'POST', body });
+      const json = await res.json() as { ok: boolean; url?: string; error?: string };
+
+      if (json.ok && json.url) {
+        window.location.href = json.url;
+      } else {
+        btn.disabled = false;
+        btn.textContent = 'Manage billing & invoices';
+        alert(json.error ?? 'Could not open billing portal. Please try again.');
+      }
+    });
+  </script>
+</Layout>

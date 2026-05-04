@@ -1,0 +1,90 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
+import CTASection from '../../components/CTASection.astro';
+
+const offerings = [
+  { title: 'Chatbot Development', body: 'Brand-consistent, multilingual bots with NLP and continuous improvement.' },
+  { title: 'Process Automation', body: 'Setup of Zapier and Make.com, workflow optimization, and custom integrations.' },
+  { title: 'Creation of AI Agents', body: 'Task-specific AI assistants for internal use.' },
+  { title: 'Custom AI Solutions', body: 'From concept to solution: strategy, development and optimization.' },
+];
+---
+<Layout title="AI Solutions Lab | Custom AI tools & automation">
+  <section class="container-content pt-16 md:pt-20 pb-12">
+    <nav aria-label="Breadcrumb" class="text-sm text-graphite/70 mb-4">
+      <a href="/services" class="hover:text-ink">Services</a> <span class="mx-2">/</span> AI Solutions Lab
+    </nav>
+    <span class="eyebrow text-teal">Build</span>
+    <h1 class="mt-4">AI Solutions Lab</h1>
+    <p class="mt-5 max-w-2xl text-lg text-graphite">Harness the power of AI with our development services. At StartMonday.AI Solutions Lab, we transform your business challenges into intelligent AI-powered solutions.</p>
+  </section>
+
+  <section class="container-content pb-10">
+    <div class="overflow-hidden rounded-2xl aspect-[21/7]">
+      <img
+        src="/images/solutions-lab-chatbot.png"
+        alt="Developer building a custom AI chatbot with a holographic chat interface"
+        class="w-full h-full object-cover"
+        loading="eager"
+        width="1200"
+        height="400"
+      />
+    </div>
+  </section>
+
+  <section class="container-content pb-20">
+    <SectionHeading eyebrow="Services" title="What we build" />
+    <div class="mt-10 grid gap-6 md:grid-cols-2">
+      {offerings.map(o => (
+        <div class="rounded bg-paper border border-line p-8 hover:border-ink transition-colors">
+          <h3 class="text-xl font-semibold">{o.title}</h3>
+          <p class="mt-3 text-graphite">{o.body}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="bg-mist">
+    <div class="container-content py-20">
+      <SectionHeading eyebrow="Process" title="How a project runs" />
+      <div class="mt-10 grid gap-6 md:grid-cols-4">
+        {[
+          ['Scoping call', '30 minutes, free. We map your problem to the right tool class.'],
+          ['Proposal', 'Fixed-price scope, timeline, and deliverables.'],
+          ['Build', 'Weekly checkpoints; you stay in the loop.'],
+          ['Handover', 'Documentation, team training, and a 30-day support window.'],
+        ].map(([h, p], i) => (
+          <div>
+            <span class="text-3xl font-bold text-amber">0{i + 1}</span>
+            <h3 class="mt-2 text-lg font-semibold">{h}</h3>
+            <p class="mt-1 text-sm text-graphite">{p}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="container-content py-20">
+    <div class="grid gap-10 md:grid-cols-2 md:items-center">
+      <div>
+        <SectionHeading eyebrow="Why work with us" title="Business-first, tool-second." />
+        <ul class="prose-brand mt-4">
+          <li>Business-oriented approach</li>
+          <li>Scalable, ethical AI solutions</li>
+          <li>Seamless integration with our educational and support services</li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="text-xl font-semibold">Engagement models</h3>
+        <ul class="prose-brand">
+          <li><strong>Fixed-scope build</strong> — defined deliverable, fixed fee.</li>
+          <li><strong>Time &amp; materials</strong> — for exploratory or evolving work.</li>
+          <li><strong>StartMonday+ top-up</strong> — use points for small builds and assessments.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <CTASection heading="Have a build in mind?" cta="Book a scoping call" />
+</Layout>

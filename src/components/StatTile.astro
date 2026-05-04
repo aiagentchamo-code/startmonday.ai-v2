@@ -1,0 +1,18 @@
+---
+interface Props {
+  value?: string;   /* static display, used when countTo is absent */
+  countTo?: number; /* triggers count-up animation */
+  suffix?: string;  /* e.g. "+" appended after the number */
+  label: string;
+}
+const { value, countTo, suffix = '', label } = Astro.props;
+const display = countTo !== undefined ? String(countTo) + suffix : (value ?? '');
+---
+<div class="flex flex-col gap-2">
+  <span
+    class="text-4xl md:text-5xl font-bold font-display tracking-tight text-ink"
+    data-count-to={countTo !== undefined ? String(countTo) : undefined}
+    data-suffix={countTo !== undefined ? suffix : undefined}
+  >{display}</span>
+  <span class="text-sm text-graphite leading-snug">{label}</span>
+</div>

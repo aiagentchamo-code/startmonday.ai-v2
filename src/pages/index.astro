@@ -1,0 +1,410 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import CTASection from '../components/CTASection.astro';
+import StatTile from '../components/StatTile.astro';
+import FAQItem from '../components/FAQItem.astro';
+
+const services = [
+  {
+    href: '/services/ai-business-academy',
+    tag: 'Academy',
+    title: 'AI Business Academy',
+    description:
+      'Workshops, bootcamps, and certificate programs that move teams from AI curiosity to daily applied practice.',
+    icon: `<path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/><path d="M22 10v6"/>`,
+  },
+  {
+    href: '/services/startmonday',
+    tag: 'Subscription',
+    title: 'StartMonday+',
+    description:
+      'Ongoing AI support, tools, and expert guidance through a flexible points-based subscription.',
+    icon: `<path d="M12 2v20"/><path d="m17 5-5-3-5 3"/><path d="m17 19-5 3-5-3"/><path d="M2 12h20"/><path d="m5 7-3 5 3 5"/><path d="m19 7 3 5-3 5"/>`,
+  },
+  {
+    href: '/services/startforward',
+    tag: 'Accelerator',
+    title: 'StartForward Accelerator',
+    description:
+      'A focused five-week program pairing AI adoption with sustainability and circular business innovation.',
+    icon: `<path d="M4.5 16.5c-1.5 1.26-2 4-2 4s2.74-.5 4-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09Z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22 22 0 0 1-4 2Z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/>`,
+  },
+  {
+    href: '/services/ai-solutions-lab',
+    tag: 'Build',
+    title: 'AI Solutions Lab',
+    description:
+      'Custom chatbots, automations, and internal AI agents scoped and built with your people.',
+    icon: `<rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 20h8"/><path d="M12 18v2"/><path d="m8 10 2 2-2 2"/><path d="M13 14h3"/>`,
+  },
+];
+
+const process = [
+  {
+    n: '01',
+    title: 'Find the highest-value use case',
+    body: 'A short discovery call maps your team, tools, friction points, and AI readiness.',
+  },
+  {
+    n: '02',
+    title: 'Match the format to the team',
+    body: 'We recommend the right mix of workshop, bootcamp, subscription, accelerator, or custom build.',
+  },
+  {
+    n: '03',
+    title: 'Apply it immediately',
+    body: 'The first session, support rhythm, or prototype is designed around practical Monday-morning use.',
+  },
+];
+
+const audiences = [
+  'Marketing, HR, operations, and leadership teams',
+  'SMEs and scale-ups without a large internal AI function',
+  'Corporate L&D teams that need credible applied AI education',
+  'Professional services teams exploring workflow automation',
+];
+
+const testimonials = [
+  {
+    quote:
+      "The workshop cut through all the noise around AI and gave our team concrete tools they could apply the very next day.",
+    name: 'Workshop participant',
+    title: 'Operations Manager',
+  },
+  {
+    quote:
+      'Rolf translated AI concepts into business decisions. We left the bootcamp with a clear roadmap, not just enthusiasm.',
+    name: 'Bootcamp participant',
+    title: 'Managing Director',
+  },
+  {
+    quote:
+      "We came in sceptical about AI's relevance. We left with a working prototype and a list of automations to build.",
+    name: 'Program participant',
+    title: 'Senior Engineer',
+  },
+];
+
+const faqs = [
+  {
+    q: 'What makes StartMonday.AI different from a generic AI course?',
+    a: 'We focus on business application, not theory. Every program is grounded in your industry context, workflows, and team goals so people know exactly what to do next.',
+  },
+  {
+    q: 'Do my team members need a technical background?',
+    a: 'No. Our training is designed for business professionals. We translate AI into decisions, workflows, prompts, and tools rather than code.',
+  },
+  {
+    q: 'How quickly can we get started?',
+    a: 'Most programs can begin within 2 to 3 weeks of a discovery call. Custom builds usually start with a scoping sprint before moving into implementation.',
+  },
+  {
+    q: 'Can you work in languages other than English?',
+    a: 'Yes. Our team delivers programs in English, Dutch, German, and Hungarian.',
+  },
+];
+
+const tools = [
+  { name: 'ChatGPT', logo: '/tool-logos/openai.svg', color: '#10A37F', bg: '#E7F7F1' },
+  { name: 'Claude', logo: '/tool-logos/claude.svg', color: '#D97757', bg: '#FFF0EA' },
+  { name: 'Microsoft Copilot', logo: '/tool-logos/microsoft.svg', color: '#2563EB', bg: '#EAF2FF' },
+  { name: 'Google Gemini', logo: '/tool-logos/googlegemini.svg', color: '#8B5CF6', bg: '#F1ECFF' },
+  { name: 'Make.com', logo: '/tool-logos/make.svg', color: '#6D28D9', bg: '#F0E7FF' },
+  { name: 'Zapier', logo: '/tool-logos/zapier.svg', color: '#FF4A00', bg: '#FFF1E8' },
+  { name: 'n8n', logo: '/tool-logos/n8n.svg', color: '#EA4B71', bg: '#FFEAF0' },
+  { name: 'Notion AI', logo: '/tool-logos/notion.svg', color: '#111827', bg: '#F2F3F5' },
+  { name: 'HubSpot AI', logo: '/tool-logos/hubspot.svg', color: '#FF5C35', bg: '#FFEDE8' },
+  { name: 'Perplexity', logo: '/tool-logos/perplexity.svg', color: '#20B8B5', bg: '#E8FBFA' },
+];
+const marqueeTools = [...tools, ...tools];
+---
+<Layout title="AI training and solutions for businesses | StartMonday.AI">
+  <section class="hero-section relative overflow-hidden">
+    <div class="hero-grid-bg" aria-hidden="true"></div>
+    <div class="hero-blob hero-blob-a" aria-hidden="true"></div>
+    <div class="hero-blob hero-blob-b" aria-hidden="true"></div>
+
+    <div class="container-content relative z-10 grid min-h-[86vh] items-center gap-12 pt-28 pb-20 lg:grid-cols-[1.02fr_0.98fr] lg:pt-32">
+      <div class="max-w-2xl">
+        <div class="reveal mb-6 inline-flex items-center gap-2 rounded-pill border border-accent/20 bg-accent-soft px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.15em] text-accent">
+          <span class="h-1.5 w-1.5 rounded-full bg-warm"></span>
+          Knowledge. Action. Outcome.
+        </div>
+
+        <h1 class="reveal reveal-delay-1 text-ink">
+          AI training with immediate impact.
+        </h1>
+
+        <p class="reveal reveal-delay-2 mt-6 max-w-xl text-lg text-graphite md:text-xl">
+          Everything we offer, from workshops to custom tools, is designed so your team can
+          start applying AI knowledge on Monday morning.
+        </p>
+
+        <div class="reveal reveal-delay-3 mt-9 flex flex-col gap-3 sm:flex-row">
+          <a href="/contact" class="btn btn-primary">
+            Book a free discovery call
+            <svg class="arrow-nudge" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+          <a href="/services" class="btn btn-secondary">Discover our services</a>
+        </div>
+
+        <div class="reveal reveal-delay-4 mt-10 grid max-w-xl gap-4 border-t border-line pt-7 sm:grid-cols-3">
+          <div>
+            <p class="text-2xl font-bold text-ink">150+</p>
+            <p class="mt-1 text-sm text-graphite">Professionals trained</p>
+          </div>
+          <div>
+            <p class="text-2xl font-bold text-ink">70+</p>
+            <p class="mt-1 text-sm text-graphite">Years digital leadership</p>
+          </div>
+          <div>
+            <p class="text-2xl font-bold text-ink">4</p>
+            <p class="mt-1 text-sm text-graphite">Languages supported</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal reveal-delay-2">
+        <div class="hero-mockup-wrap">
+          <div class="mockup-orbit mockup-orbit-a" aria-hidden="true"></div>
+          <div class="mockup-orbit mockup-orbit-b" aria-hidden="true"></div>
+
+          <div class="journey-panel">
+            <div class="journey-hero">
+              <div>
+                <p>Premium AI Academy + Applied Consultancy</p>
+                <h2>From workshop to Monday-morning action.</h2>
+              </div>
+              <span>5-day start</span>
+            </div>
+
+            <div class="founder-credibility">
+              <div class="founder-stack">
+                <img src="/rolf.jpg" alt="Rolf Neleman" class="founder-avatar" />
+                <img src="/bela.jpg" alt="Béla Paul Sándor" class="founder-avatar" />
+              </div>
+              <div>
+                <strong>Rolf &amp; Bela</strong>
+                <p>70+ years of digital strategy, innovation, leadership, and applied AI experience.</p>
+              </div>
+            </div>
+
+            <div class="journey-path" aria-label="StartMonday implementation journey">
+              {[
+                ['Academy', 'Train the team', 'AI Business Academy'],
+                ['Support', 'Keep momentum', 'StartMonday+'],
+                ['Accelerate', 'Build innovation', 'StartForward'],
+                ['Implement', 'Ship useful tools', 'Solutions Lab'],
+              ].map(([label, title, service], i) => (
+                <article class:list={['journey-step', `journey-step-${i + 1}`]}>
+                  <span>{String(i + 1).padStart(2, '0')}</span>
+                  <div>
+                    <p>{label}</p>
+                    <h3>{title}</h3>
+                    <small>{service}</small>
+                  </div>
+                </article>
+              ))}
+            </div>
+
+            <div class="monday-outcome">
+              <span>Monday outcome</span>
+              <strong>A practical AI workflow your team can use immediately.</strong>
+            </div>
+          </div>
+
+          <div class="mockup-badge mockup-badge-top">
+            <span></span>
+            English, Dutch, German, Hungarian
+          </div>
+          <div class="mockup-badge mockup-badge-bottom">
+            <span></span>
+            150+ professionals trained
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="overflow-hidden border-y border-line bg-paper py-6" aria-label="Technologies we teach and deploy">
+    <p class="mb-4 text-center text-xs font-semibold uppercase tracking-[0.14em] text-graphite/45">
+      Technologies we teach &amp; deploy
+    </p>
+    <div class="relative flex overflow-hidden" style="mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);">
+      <div class="marquee-track inline-flex flex-shrink-0 gap-4 pr-4">
+        {marqueeTools.map((tool) => (
+          <span
+            class="tool-chip"
+            style={`--tool-color:${tool.color}; --tool-bg:${tool.bg};`}
+          >
+            <span><img src={tool.logo} alt={`${tool.name} logo`} loading="lazy" /></span>
+            {tool.name}
+          </span>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="container-content py-24 md:py-32">
+    <div class="reveal">
+      <SectionHeading
+        eyebrow="Services"
+        title="A practical AI adoption system, not another generic course."
+        lead="Choose the format that fits your team now. Combine formats when the opportunity is bigger."
+      />
+    </div>
+
+    <div class="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+      {services.map((service, i) => (
+        <a href={service.href} class:list={['reveal-scale group card card-lift flex min-h-[310px] flex-col justify-between p-6', `reveal-delay-${i + 1}`]}>
+          <div>
+            <div class="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-accent-soft text-accent">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" set:html={service.icon}></svg>
+            </div>
+            <span class="eyebrow">{service.tag}</span>
+            <h3 class="mt-4 text-xl font-semibold leading-tight text-ink transition-colors group-hover:text-accent">{service.title}</h3>
+            <p class="mt-3 text-sm text-graphite">{service.description}</p>
+          </div>
+          <span class="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-ink group-hover:text-accent">
+            Learn more
+            <svg class="arrow-nudge" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="bg-paper border-y border-line">
+    <div class="container-content grid gap-14 py-24 md:py-32 lg:grid-cols-[0.92fr_1.08fr] lg:items-center">
+      <div class="reveal">
+        <span class="eyebrow">How it works</span>
+        <h2 class="mt-4">From first call to Monday start.</h2>
+        <p class="mt-5 text-lg text-graphite">
+          The work is intentionally simple: find the useful use case, match the format, then build momentum with tools and habits your team can actually keep using.
+        </p>
+        <a href="/contact" class="btn btn-primary mt-8">Book your free discovery call</a>
+      </div>
+
+      <div class="grid gap-4">
+        {process.map((step, i) => (
+          <article class:list={['reveal card flex gap-5 p-6', `reveal-delay-${i + 1}`]}>
+            <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-accent-soft text-sm font-bold text-accent">
+              {step.n}
+            </div>
+            <div>
+              <h3 class="text-xl font-semibold text-ink">{step.title}</h3>
+              <p class="mt-2 text-sm text-graphite">{step.body}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="container-content py-24 md:py-32">
+    <div class="grid gap-12 lg:grid-cols-2 lg:items-center">
+      <div class="reveal">
+        <SectionHeading
+          eyebrow="Who it is for"
+          title="Built for business teams that need AI to become useful."
+          lead="No coding background required. No buzzword theater. Just workflows, tools, and better decisions."
+        />
+      </div>
+      <div class="grid gap-3">
+        {audiences.map((item, i) => (
+          <div class:list={['reveal-blur flex items-start gap-3 rounded-2xl border border-line bg-paper p-4 shadow-card', `reveal-delay-${i + 1}`]}>
+            <span class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-mint/40 text-ink">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>
+            </span>
+            <p class="text-sm font-medium text-graphite">{item}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="container-content pb-24 md:pb-32">
+    <div class="overflow-hidden rounded-2xl aspect-[21/8]">
+      <img
+        src="/images/hero-workshop.png"
+        alt="A diverse team working through a hands-on AI session — the kind of workshop StartMonday.AI runs across Europe"
+        class="w-full h-full object-cover object-center"
+        loading="lazy"
+        width="1200"
+        height="457"
+      />
+    </div>
+  </section>
+
+  <section class="bg-accent-soft/40 border-y border-line">
+    <div class="container-content py-20">
+      <div class="grid grid-cols-2 gap-8 md:grid-cols-4 md:divide-x md:divide-line">
+        <div class="reveal">
+          <StatTile countTo={150} suffix="+" label="Professionals trained on applied AI" />
+        </div>
+        <div class="reveal reveal-delay-1 md:pl-8">
+          <StatTile countTo={70} suffix="+" label="Years of combined digital leadership" />
+        </div>
+        <div class="reveal reveal-delay-2 md:pl-8">
+          <StatTile countTo={4} label="Languages: EN, NL, DE, HU" />
+        </div>
+        <div class="reveal reveal-delay-3 md:pl-8">
+          <StatTile countTo={5} label="Working days from sign-off to Monday start" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="container-content py-24 md:py-32">
+    <div class="reveal">
+      <SectionHeading
+        eyebrow="What participants say"
+        title="Results that speak for themselves."
+        lead="Real reactions from teams that needed AI to become practical quickly."
+      />
+    </div>
+    <div class="mt-12 grid gap-5 md:grid-cols-3">
+      {testimonials.map((t, i) => (
+        <figure class:list={['reveal-scale card flex min-h-[300px] flex-col justify-between gap-6 p-8', `reveal-delay-${i + 1}`]}>
+          <div class="flex gap-1">
+            {[1, 2, 3, 4, 5].map(() => (
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="#FFD166" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            ))}
+          </div>
+          <blockquote class="text-graphite leading-relaxed italic">"{t.quote}"</blockquote>
+          <figcaption class="border-t border-line pt-4">
+            <p class="text-sm font-semibold text-ink">{t.name}</p>
+            <p class="mt-0.5 text-xs text-graphite">{t.title}</p>
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+  </section>
+
+  <section class="bg-paper border-t border-line">
+    <div class="container-content py-24 md:py-32">
+      <div class="reveal">
+        <SectionHeading
+          eyebrow="FAQ"
+          title="Common questions."
+          lead="Everything you need to know before getting in touch."
+        />
+      </div>
+      <div class="reveal reveal-delay-1 mt-10 max-w-3xl">
+        {faqs.map((f) => (
+          <FAQItem q={f.q}>
+            <p>{f.a}</p>
+          </FAQItem>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CTASection
+    heading="Ready to make AI work for your business?"
+    body="Start with a free 20-minute discovery call. We'll identify your biggest AI opportunity and recommend the right starting point."
+    cta="Book your free discovery call"
+    href="/contact"
+  />
+</Layout>

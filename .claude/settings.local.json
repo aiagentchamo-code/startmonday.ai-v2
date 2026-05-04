@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm --version)",
+      "mcp__Claude_in_Chrome__tabs_context_mcp",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:4321/)",
+      "WebFetch(domain:www.startmonday.ai)",
+      "Bash(curl -sL https://www.startmonday.ai/ -o /tmp/sm.html)",
+      "Read(//tmp/**)",
+      "Bash(start http://localhost:4321/)",
+      "Bash(curl -sL http://localhost:4321/)",
+      "mcp__Claude_in_Chrome__navigate",
+      "mcp__Claude_in_Chrome__computer"
+    ]
+  }
+}
