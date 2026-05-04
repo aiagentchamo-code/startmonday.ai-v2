@@ -1,6 +1,6 @@
 import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
-import node from '@astrojs/node';
+import vercel from '@astrojs/vercel/serverless';
 
 // Warn at startup if critical environment variables are missing.
 const requiredEnvVars = ['SMTP_HOST', 'SMTP_USER', 'SMTP_PASS'];
@@ -41,7 +41,6 @@ if (!process.env.STRIPE_WEBHOOK_SECRET) {
 export default defineConfig({
   site: 'https://startmonday.ai',
   output: 'server',
-  adapter: node({ mode: 'standalone' }),
+  adapter: vercel(),
   integrations: [tailwind({ applyBaseStyles: false })],
-  server: { host: true },
 });
