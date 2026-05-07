@@ -27,7 +27,7 @@ const navLinks = [
 ---
 <header
   id="site-header"
-  class="fixed top-0 left-0 right-0 z-40 border-b border-line/70 bg-paper/82 backdrop-blur-md shadow-[0_1px_20px_-1px_rgba(14,14,44,0.06)] transition-all duration-300"
+  class="fixed top-0 left-0 right-0 z-40 transition-all duration-500 bg-transparent"
 >
   <div class="container-content flex h-16 items-center justify-between md:h-20">
 
@@ -217,6 +217,18 @@ const navLinks = [
   })();
 </script>
 
+<script is:inline>
+  (function () {
+    var header = document.getElementById('site-header');
+    if (!header) return;
+    function onScroll() {
+      header.classList.toggle('header-scrolled', window.scrollY > 20);
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  })();
+</script>
+
 <style>
   /* Dropdown panel — hidden by default, shown on hover/focus-within */
   .dropdown-panel {
@@ -257,5 +269,31 @@ const navLinks = [
     background: rgba(255,255,255,0.16);
     border-color: rgba(255,255,255,0.85);
     transform: translateY(-1px);
+  }
+
+  /* Scroll-aware header */
+  #site-header.header-scrolled {
+    background: rgba(255, 255, 255, 0.82);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 1px 20px -1px rgba(14, 14, 44, 0.06);
+    border-bottom: 1px solid rgba(208, 232, 227, 0.7);
+  }
+
+  /* Nav link hover underline */
+  .nav-link {
+    position: relative;
+  }
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    height: 1px;
+    width: 0;
+    background: #2B7D6D;
+    transition: width 0.3s ease;
+  }
+  .nav-link:hover::after {
+    width: 100%;
   }
 </style>

@@ -4,6 +4,15 @@ import SectionHeading from '../components/SectionHeading.astro';
 import CTASection from '../components/CTASection.astro';
 import StatTile from '../components/StatTile.astro';
 import FAQItem from '../components/FAQItem.astro';
+import ParticleBackground from '../components/ParticleBackground.tsx';
+import AnimateOnScroll from '../components/AnimateOnScroll.tsx';
+import AnimatedCounter from '../components/AnimatedCounter.tsx';
+import { HeroHeading, HeroParagraph, HeroCTAGroup, HeroBadge } from '../components/HeroContent.tsx';
+import PulsingCTA from '../components/PulsingCTA.tsx';
+import CardHover from '../components/CardHover.tsx';
+import StepNumber from '../components/StepNumber.tsx';
+import ConnectorLine from '../components/ConnectorLine.tsx';
+import ToolGlow from '../components/ToolGlow.tsx';
 
 const services = [
   {
@@ -120,49 +129,52 @@ const tools = [
 const marqueeTools = [...tools, ...tools];
 ---
 <Layout title="AI training and solutions for businesses | StartMonday.AI">
-  <section class="hero-section relative overflow-hidden">
+  <section class="hero-section relative overflow-hidden ai-grid-bg scanline">
+    <ParticleBackground client:load />
     <div class="hero-grid-bg" aria-hidden="true"></div>
     <div class="hero-blob hero-blob-a" aria-hidden="true"></div>
     <div class="hero-blob hero-blob-b" aria-hidden="true"></div>
 
     <div class="container-content relative z-10 grid min-h-[86vh] items-center gap-12 pt-28 pb-20 lg:grid-cols-[1.02fr_0.98fr] lg:pt-32">
       <div class="max-w-2xl">
-        <div class="reveal mb-6 inline-flex items-center gap-2 rounded-pill border border-accent/20 bg-accent-soft px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.15em] text-accent">
+        <HeroBadge client:load className="mb-6 inline-flex items-center gap-2 rounded-pill border border-accent/20 bg-accent-soft px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.15em] text-accent">
           <span class="h-1.5 w-1.5 rounded-full bg-warm"></span>
           Knowledge. Action. Outcome.
-        </div>
+        </HeroBadge>
 
-        <h1 class="reveal reveal-delay-1 text-ink">
+        <HeroHeading client:load className="text-ink">
           AI training with immediate impact.
-        </h1>
+        </HeroHeading>
 
-        <p class="reveal reveal-delay-2 mt-6 max-w-xl text-lg text-graphite md:text-xl">
+        <HeroParagraph client:load className="mt-6 max-w-xl text-lg text-graphite md:text-xl">
           Everything we offer, from workshops to custom tools, is designed so your team can
           start applying AI knowledge on Monday morning.
-        </p>
+        </HeroParagraph>
 
-        <div class="reveal reveal-delay-3 mt-9 flex flex-col gap-3 sm:flex-row">
-          <a href="/contact" class="btn btn-primary">
-            Book a free discovery call
-            <svg class="arrow-nudge" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-          </a>
+        <HeroCTAGroup client:load className="mt-9 flex flex-col gap-3 sm:flex-row">
+          <PulsingCTA client:load>
+            <a href="/contact" class="btn btn-primary">
+              Book a free discovery call
+              <svg class="arrow-nudge" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </a>
+          </PulsingCTA>
           <a href="/services" class="btn btn-secondary">Discover our services</a>
-        </div>
+        </HeroCTAGroup>
 
-        <div class="reveal reveal-delay-4 mt-10 grid max-w-xl gap-4 border-t border-line pt-7 sm:grid-cols-3">
+        <AnimateOnScroll client:visible delay={0.6} className="mt-10 grid max-w-xl gap-4 border-t border-line pt-7 sm:grid-cols-3">
           <div>
-            <p class="text-2xl font-bold text-ink">150+</p>
+            <p class="text-2xl font-bold text-ink"><AnimatedCounter client:visible value={150} suffix="+" /></p>
             <p class="mt-1 text-sm text-graphite">Professionals trained</p>
           </div>
           <div>
-            <p class="text-2xl font-bold text-ink">70+</p>
+            <p class="text-2xl font-bold text-ink"><AnimatedCounter client:visible value={70} suffix="+" /></p>
             <p class="mt-1 text-sm text-graphite">Years digital leadership</p>
           </div>
           <div>
-            <p class="text-2xl font-bold text-ink">4</p>
+            <p class="text-2xl font-bold text-ink"><AnimatedCounter client:visible value={4} /></p>
             <p class="mt-1 text-sm text-graphite">Languages supported</p>
           </div>
-        </div>
+        </AnimateOnScroll>
       </div>
 
       <div class="reveal reveal-delay-2">
@@ -228,75 +240,90 @@ const marqueeTools = [...tools, ...tools];
   </section>
 
   <section class="overflow-hidden border-y border-line bg-paper py-6" aria-label="Technologies we teach and deploy">
-    <p class="mb-4 text-center text-xs font-semibold uppercase tracking-[0.14em] text-graphite/45">
-      Technologies we teach &amp; deploy
-    </p>
+    <AnimateOnScroll client:visible>
+      <p class="mb-4 text-center text-xs font-semibold uppercase tracking-[0.14em] text-graphite/45">
+        Technologies we teach &amp; deploy
+      </p>
+    </AnimateOnScroll>
     <div class="relative flex overflow-hidden" style="mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);">
       <div class="marquee-track inline-flex flex-shrink-0 gap-4 pr-4">
         {marqueeTools.map((tool) => (
-          <span
-            class="tool-chip"
-            style={`--tool-color:${tool.color}; --tool-bg:${tool.bg};`}
-          >
-            <span><img src={tool.logo} alt={`${tool.name} logo`} loading="lazy" /></span>
-            {tool.name}
-          </span>
+          <ToolGlow client:visible>
+            <span
+              class="tool-chip"
+              style={`--tool-color:${tool.color}; --tool-bg:${tool.bg};`}
+            >
+              <span><img src={tool.logo} alt={`${tool.name} logo`} loading="lazy" /></span>
+              {tool.name}
+            </span>
+          </ToolGlow>
         ))}
       </div>
     </div>
   </section>
 
   <section class="container-content py-24 md:py-32">
-    <div class="reveal">
+    <AnimateOnScroll client:visible>
       <SectionHeading
         eyebrow="Services"
         title="A practical AI adoption system, not another generic course."
         lead="Choose the format that fits your team now. Combine formats when the opportunity is bigger."
       />
-    </div>
+    </AnimateOnScroll>
 
     <div class="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
       {services.map((service, i) => (
-        <a href={service.href} class:list={['reveal-scale group card card-lift flex min-h-[310px] flex-col justify-between p-6', `reveal-delay-${i + 1}`]}>
-          <div>
-            <div class="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-accent-soft text-accent">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" set:html={service.icon}></svg>
-            </div>
-            <span class="eyebrow">{service.tag}</span>
-            <h3 class="mt-4 text-xl font-semibold leading-tight text-ink transition-colors group-hover:text-accent">{service.title}</h3>
-            <p class="mt-3 text-sm text-graphite">{service.description}</p>
-          </div>
-          <span class="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-ink group-hover:text-accent">
-            Learn more
-            <svg class="arrow-nudge" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-          </span>
-        </a>
+        <AnimateOnScroll client:visible delay={i * 0.1}>
+          <CardHover client:visible>
+            <a href={service.href} class="group card card-lift glow-border flex min-h-[310px] flex-col justify-between p-6">
+              <div>
+                <div class="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-accent-soft text-accent">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" set:html={service.icon}></svg>
+                </div>
+                <span class="eyebrow">{service.tag}</span>
+                <h3 class="mt-4 text-xl font-semibold leading-tight text-ink transition-colors group-hover:text-accent">{service.title}</h3>
+                <p class="mt-3 text-sm text-graphite">{service.description}</p>
+              </div>
+              <span class="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-ink group-hover:text-accent">
+                Learn more
+                <svg class="arrow-nudge" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+              </span>
+            </a>
+          </CardHover>
+        </AnimateOnScroll>
       ))}
     </div>
   </section>
 
   <section class="bg-paper border-y border-line">
     <div class="container-content grid gap-14 py-24 md:py-32 lg:grid-cols-[0.92fr_1.08fr] lg:items-center">
-      <div class="reveal">
+      <AnimateOnScroll client:visible>
         <span class="eyebrow">How it works</span>
         <h2 class="mt-4">From first call to Monday start.</h2>
         <p class="mt-5 text-lg text-graphite">
           The work is intentionally simple: find the useful use case, match the format, then build momentum with tools and habits your team can actually keep using.
         </p>
-        <a href="/contact" class="btn btn-primary mt-8">Book your free discovery call</a>
-      </div>
+        <PulsingCTA client:visible>
+          <a href="/contact" class="btn btn-primary mt-8">Book your free discovery call</a>
+        </PulsingCTA>
+      </AnimateOnScroll>
 
-      <div class="grid gap-4">
+      <div class="grid gap-0">
         {process.map((step, i) => (
-          <article class:list={['reveal card flex gap-5 p-6', `reveal-delay-${i + 1}`]}>
-            <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-accent-soft text-sm font-bold text-accent">
-              {step.n}
-            </div>
-            <div>
-              <h3 class="text-xl font-semibold text-ink">{step.title}</h3>
-              <p class="mt-2 text-sm text-graphite">{step.body}</p>
-            </div>
-          </article>
+          <div>
+            <AnimateOnScroll client:visible delay={i * 0.15}>
+              <article class="card flex gap-5 p-6 glow-border">
+                <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-accent-soft">
+                  <StepNumber client:visible n={step.n} />
+                </div>
+                <div>
+                  <h3 class="text-xl font-semibold text-ink">{step.title}</h3>
+                  <p class="mt-2 text-sm text-graphite">{step.body}</p>
+                </div>
+              </article>
+            </AnimateOnScroll>
+            {i < process.length - 1 && <ConnectorLine client:visible />}
+          </div>
         ))}
       </div>
     </div>
@@ -304,98 +331,108 @@ const marqueeTools = [...tools, ...tools];
 
   <section class="container-content py-24 md:py-32">
     <div class="grid gap-12 lg:grid-cols-2 lg:items-center">
-      <div class="reveal">
+      <AnimateOnScroll client:visible>
         <SectionHeading
           eyebrow="Who it is for"
           title="Built for business teams that need AI to become useful."
           lead="No coding background required. No buzzword theater. Just workflows, tools, and better decisions."
         />
-      </div>
+      </AnimateOnScroll>
       <div class="grid gap-3">
         {audiences.map((item, i) => (
-          <div class:list={['reveal-blur flex items-start gap-3 rounded-2xl border border-line bg-paper p-4 shadow-card', `reveal-delay-${i + 1}`]}>
-            <span class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-mint/40 text-ink">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>
-            </span>
-            <p class="text-sm font-medium text-graphite">{item}</p>
-          </div>
+          <AnimateOnScroll client:visible delay={i * 0.1}>
+            <div class="flex items-start gap-3 rounded-2xl border border-line bg-paper p-4 shadow-card glow-border">
+              <span class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-mint/40 text-ink">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>
+              </span>
+              <p class="text-sm font-medium text-graphite">{item}</p>
+            </div>
+          </AnimateOnScroll>
         ))}
       </div>
     </div>
   </section>
 
   <section class="container-content pb-24 md:pb-32">
-    <div class="overflow-hidden rounded-2xl aspect-[21/8]">
-      <img
-        src="/images/hero-workshop.png"
-        alt="A diverse team working through a hands-on AI session — the kind of workshop StartMonday.AI runs across Europe"
-        class="w-full h-full object-cover object-center"
-        loading="lazy"
-        width="1200"
-        height="457"
-      />
-    </div>
+    <AnimateOnScroll client:visible>
+      <div class="overflow-hidden rounded-2xl aspect-[21/8]">
+        <img
+          src="/images/hero-workshop.png"
+          alt="A diverse team working through a hands-on AI session — the kind of workshop StartMonday.AI runs across Europe"
+          class="w-full h-full object-cover object-center"
+          loading="lazy"
+          width="1200"
+          height="457"
+        />
+      </div>
+    </AnimateOnScroll>
   </section>
 
   <section class="bg-accent-soft/40 border-y border-line">
     <div class="container-content py-20">
       <div class="grid grid-cols-2 gap-8 md:grid-cols-4 md:divide-x md:divide-line">
-        <div class="reveal">
+        <AnimateOnScroll client:visible delay={0}>
           <StatTile countTo={150} suffix="+" label="Professionals trained on applied AI" />
-        </div>
-        <div class="reveal reveal-delay-1 md:pl-8">
+        </AnimateOnScroll>
+        <AnimateOnScroll client:visible delay={0.1} className="md:pl-8">
           <StatTile countTo={70} suffix="+" label="Years of combined digital leadership" />
-        </div>
-        <div class="reveal reveal-delay-2 md:pl-8">
+        </AnimateOnScroll>
+        <AnimateOnScroll client:visible delay={0.2} className="md:pl-8">
           <StatTile countTo={4} label="Languages: EN, NL, DE, HU" />
-        </div>
-        <div class="reveal reveal-delay-3 md:pl-8">
+        </AnimateOnScroll>
+        <AnimateOnScroll client:visible delay={0.3} className="md:pl-8">
           <StatTile countTo={5} label="Working days from sign-off to Monday start" />
-        </div>
+        </AnimateOnScroll>
       </div>
     </div>
   </section>
 
   <section class="container-content py-24 md:py-32">
-    <div class="reveal">
+    <AnimateOnScroll client:visible>
       <SectionHeading
         eyebrow="What participants say"
         title="Results that speak for themselves."
         lead="Real reactions from teams that needed AI to become practical quickly."
       />
-    </div>
+    </AnimateOnScroll>
     <div class="mt-12 grid gap-5 md:grid-cols-3">
       {testimonials.map((t, i) => (
-        <figure class:list={['reveal-scale card flex min-h-[300px] flex-col justify-between gap-6 p-8', `reveal-delay-${i + 1}`]}>
-          <div class="flex gap-1">
-            {[1, 2, 3, 4, 5].map(() => (
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="#FFD166" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-            ))}
-          </div>
-          <blockquote class="text-graphite leading-relaxed italic">"{t.quote}"</blockquote>
-          <figcaption class="border-t border-line pt-4">
-            <p class="text-sm font-semibold text-ink">{t.name}</p>
-            <p class="mt-0.5 text-xs text-graphite">{t.title}</p>
-          </figcaption>
-        </figure>
+        <AnimateOnScroll client:visible delay={i * 0.1}>
+          <CardHover client:visible>
+            <figure class="card glow-border flex min-h-[300px] flex-col justify-between gap-6 p-8">
+              <div class="flex gap-1">
+                {[1, 2, 3, 4, 5].map(() => (
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="#FFD166" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                ))}
+              </div>
+              <blockquote class="text-graphite leading-relaxed italic">"{t.quote}"</blockquote>
+              <figcaption class="border-t border-line pt-4">
+                <p class="text-sm font-semibold text-ink">{t.name}</p>
+                <p class="mt-0.5 text-xs text-graphite">{t.title}</p>
+              </figcaption>
+            </figure>
+          </CardHover>
+        </AnimateOnScroll>
       ))}
     </div>
   </section>
 
   <section class="bg-paper border-t border-line">
     <div class="container-content py-24 md:py-32">
-      <div class="reveal">
+      <AnimateOnScroll client:visible>
         <SectionHeading
           eyebrow="FAQ"
           title="Common questions."
           lead="Everything you need to know before getting in touch."
         />
-      </div>
-      <div class="reveal reveal-delay-1 mt-10 max-w-3xl">
-        {faqs.map((f) => (
-          <FAQItem q={f.q}>
-            <p>{f.a}</p>
-          </FAQItem>
+      </AnimateOnScroll>
+      <div class="mt-10 max-w-3xl">
+        {faqs.map((f, i) => (
+          <AnimateOnScroll client:visible delay={i * 0.08}>
+            <FAQItem q={f.q}>
+              <p>{f.a}</p>
+            </FAQItem>
+          </AnimateOnScroll>
         ))}
       </div>
     </div>

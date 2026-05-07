@@ -1,5 +1,6 @@
 import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
+import react from '@astrojs/react';
 import vercel from '@astrojs/vercel';
 
 // Warn at startup if critical environment variables are missing.
@@ -42,5 +43,5 @@ export default defineConfig({
   site: 'https://startmonday.ai',
   output: 'server',
   adapter: vercel(),
-  integrations: [tailwind({ applyBaseStyles: false })],
+  integrations: [tailwind({ applyBaseStyles: false }), react()],
 });
