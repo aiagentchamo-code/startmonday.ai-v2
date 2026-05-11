@@ -9,7 +9,11 @@ import {
 } from '../../lib/mailer';
 import { upsertCustomer, upsertSubscription, updateSubscriptionStatus } from '../../lib/db';
 
-export const POST: APIRoute = async ({ request }) => {
+export const ALL: APIRoute = async ({ request }) => {
+  if (request.method !== 'POST') {
+    return new Response('Method not allowed.', { status: 405 });
+  }
+
   const sig = request.headers.get('stripe-signature');
   const webhookSecret = import.meta.env.STRIPE_WEBHOOK_SECRET;
 

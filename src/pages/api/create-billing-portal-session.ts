@@ -1,12 +1,20 @@
 import type { APIRoute } from 'astro';
 import { getStripeClient } from '../../lib/stripe';
 
-export const POST: APIRoute = async ({ request }) => {
+export const POST: APIRoute = async ({ request, locals }) => {
   try {
+    if (!locals.user) {
+      return new Response(JSON.stringify({ ok: false, error: 'Authentication required.' }), { status: 401 });
+    }
+
     const formData = await request.formData();
     const customerId = String(formData.get('customerId') ?? '').trim();
     if (!customerId) {
       return new Response(JSON.stringify({ ok: false, error: 'Customer ID is required.' }), { status: 400 });
+    }
+
+    if (!/^cus_[a-zA-Z0-9]+$/.test(customerId)) {
+      return new Response(JSON.stringify({ ok: false, error: 'Invalid customer ID format.' }), { status: 400 });
     }
 
     const stripe = getStripeClient();

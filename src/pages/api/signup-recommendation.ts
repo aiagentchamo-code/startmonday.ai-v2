@@ -10,7 +10,7 @@ const ALLOWED_ORIGINS = [
 
 export const POST: APIRoute = async ({ request }) => {
   const origin = request.headers.get('origin');
-  if (origin && !ALLOWED_ORIGINS.includes(origin)) {
+  if (!origin || !ALLOWED_ORIGINS.includes(origin)) {
     return new Response(JSON.stringify({ ok: false, error: 'Forbidden.' }), { status: 403 });
   }
 
